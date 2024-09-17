@@ -1,4 +1,12 @@
-OLa
+Nem de longe ficou do jeito que eu gostaria que ficasse, mas fiz oq pude e o que deu tempo. Ainda há muitos erros e não deu tempo de fazer o cadastro e login.
+
+Para testar o projeto:
+Clonar na sua máquina
+Cntrl C + Cntrl V na pasta env.example e renomear a cópia para .env
+o nome da database é: sistema_projetos
+Composer I no terminal
+php artisan key:generate 
+php artisan serve
 
 
 

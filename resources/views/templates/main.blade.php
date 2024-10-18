@@ -68,7 +68,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('projects.index') }}">Projetos</a>
+                        <a class="nav-link" href="{{ route('projeto.index') }}">Projetos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('tarefas.index') }}">Tarefas</a>
@@ -100,7 +100,7 @@
         <div class="container">
             <h1>Sistema de Gerenciamento de Projetos</h1>
             <p>Gerencie seus projetos e tarefas com eficiência.</p>
-            <a href="{{ route('projects.index') }}" class="btn btn-primary btn-lg">Ver Projetos</a>
+            <a href="{{ route('projeto.index') }}" class="btn btn-primary btn-lg">Ver Projetos</a>
         </div>
     </div>
 

@@ -9,7 +9,7 @@ class Usuario extends Model
 {
     use HasFactory;
 
-    public function projects()
+    public function projetos()
 {
     return $this->hasMany(Project::class);
 }

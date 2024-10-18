@@ -9,9 +9,9 @@ class Tarefa extends Model
 {
     use HasFactory;
 
-    public function project()
+    public function projeto()
     {
-        return $this->belongsTo(Project::class, 'project_id');
+        return $this->belongsTo(Projeto::class, 'projeto_id');
     }
 
     public function responsavel()

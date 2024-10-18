@@ -9,7 +9,7 @@
 <body>
     <div class="container mt-4">
         <h1>Criar Projeto</h1>
-        <form action="{{ route('projects.store') }}" method="POST">
+        <form action="{{ route('projeto.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="titulo" class="form-label">Título</label>

@@ -9,7 +9,7 @@
 <body>
     <div class="container mt-4">
         <h1>Projetos</h1>
-        <a href="{{ route('projects.create') }}" class="btn btn-primary mb-3">Novo Projeto</a>
+        <a href="{{ route('projeto.create') }}" class="btn btn-primary mb-3">Novo Projeto</a>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -23,18 +23,18 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($projects as $project)
+                @foreach ($projetos as $projeto)
                 <tr>
-                    <td>{{ $project->id }}</td>
-                    <td>{{ $project->titulo }}</td>
-                    <td>{{ $project->descricao }}</td>
-                    <td>{{ $project->data_inicio }}</td>
-                    <td>{{ $project->data_termino }}</td>
-                    <td>{{ $project->cliente->nome ?? 'N/A' }}</td>
+                    <td>{{ $projeto->id }}</td>
+                    <td>{{ $projeto->titulo }}</td>
+                    <td>{{ $projeto->descricao }}</td>
+                    <td>{{ $projeto->data_inicio }}</td>
+                    <td>{{ $projeto->data_termino }}</td>
+                    <td>{{ $projeto->cliente->nome ?? 'N/A' }}</td>
                     <td>
-                        <a href="{{ route('projects.show', $project->id) }}" class="btn btn-info btn-sm">Ver</a>
-                        <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                        <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('projeto.show', $projeto->id) }}" class="btn btn-info btn-sm">Ver</a>
+                        <a href="{{ route('projeto.edit', $projeto->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                        <form action="{{ route('projetos.destroy', $projeto->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Excluir</button>

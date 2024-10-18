@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tarefa;
-use App\Models\Project;
+use App\Models\Projeto;
 
 class TarefaController extends Controller
 {
@@ -18,8 +18,8 @@ class TarefaController extends Controller
     // Mostra o formulário para criar uma nova tarefa
     public function create()
     {
-        $project = Projects::all();
-        return view('tarefas.create', compact('projects'));
+        $projetos = Projetos::all();
+        return view('tarefas.create', compact('projetos'));
     }
 
     // Armazena uma nova tarefa no banco de dados
@@ -30,7 +30,7 @@ class TarefaController extends Controller
             'descricao' => 'nullable|string',
             'data_inicio' => 'required|date',
             'data_termino' => 'nullable|date',
-            'project_id' => 'required|exists:projects,id',
+            'projeto_id' => 'required|exists:projetos,id',
         ]);
 
         $tarefa = new Tarefa();
@@ -38,7 +38,7 @@ class TarefaController extends Controller
         $tarefa->descricao = $request->descricao;
         $tarefa->data_inicio = $request->data_inicio;
         $tarefa->data_termino = $request->data_termino;
-        $tarefa->project_id = $request->project_id;
+        $tarefa->projeto_id = $request->projeto_id;
         $tarefa->save();
 
         return redirect()->route('tarefas.index');
@@ -53,8 +53,8 @@ class TarefaController extends Controller
     // Mostra o formulário para editar uma tarefa existente
     public function edit(Tarefa $tarefa)
     {
-        $projects = Project::all();
-        return view('tarefas.edit', compact('tarefa', 'projects'));
+        $projetos = projeto::all();
+        return view('tarefas.edit', compact('tarefa', 'projetos'));
     }
 
     // Atualiza uma tarefa existente no banco de dados
@@ -65,14 +65,14 @@ class TarefaController extends Controller
             'descricao' => 'nullable|string',
             'data_inicio' => 'required|date',
             'data_termino' => 'nullable|date',
-            'project_id' => 'required|exists:projects,id',
+            'projeto_id' => 'required|exists:projetos,id',
         ]);
 
         $tarefa->titulo = mb_strtoupper($request->titulo, 'UTF-8');
         $tarefa->descricao = $request->descricao;
         $tarefa->data_inicio = $request->data_inicio;
         $tarefa->data_termino = $request->data_termino;
-        $tarefa->project_id = $request->project_id;
+        $tarefa->projeto_id = $request->projeto_id;
         $tarefa->save();
 
         return redirect()->route('tarefas.index');

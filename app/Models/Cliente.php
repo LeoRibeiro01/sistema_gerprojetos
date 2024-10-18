@@ -16,8 +16,8 @@ class Cliente extends Model
         'endereco',
     ];
 
-    public function projects()
+    public function projetos()
     {
-        return $this->hasMany(Project::class, 'cliente_id');
+        return $this->hasMany(Projeto::class, 'cliente_id');
     }
 }

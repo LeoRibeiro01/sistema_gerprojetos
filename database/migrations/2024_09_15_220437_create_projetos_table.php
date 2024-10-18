@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('projetos', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
             $table->text('descricao')->nullable();
@@ -24,7 +24,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('projetos'); // Certifique-se de que o nome da tabela está correto
     }
 };

@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjetoController;
 use App\Http\Controllers\TarefaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
@@ -29,7 +29,7 @@ Route::get('/dashboard', function () {
 
 
 // Routes for projects
-Route::resource('projects', ProjectController::class);
+Route::resource('projeto', ProjetoController::class);
 
 // Routes for tasks
 Route::resource('tarefas', TarefaController::class);

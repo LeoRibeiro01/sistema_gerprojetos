@@ -11,17 +11,17 @@
         <h1>Detalhes do Projeto</h1>
         <dl class="row">
             <dt class="col-sm-3">Título</dt>
-            <dd class="col-sm-9">{{ $project->titulo }}</dd>
+            <dd class="col-sm-9">{{ $projeto->titulo }}</dd>
             <dt class="col-sm-3">Descrição</dt>
-            <dd class="col-sm-9">{{ $project->descricao }}</dd>
+            <dd class="col-sm-9">{{ $projeto->descricao }}</dd>
             <dt class="col-sm-3">Data Início</dt>
-            <dd class="col-sm-9">{{ $project->data_inicio }}</dd>
+            <dd class="col-sm-9">{{ $projeto->data_inicio }}</dd>
             <dt class="col-sm-3">Data Término</dt>
-            <dd class="col-sm-9">{{ $project->data_termino }}</dd>
+            <dd class="col-sm-9">{{ $projeto->data_termino }}</dd>
             <dt class="col-sm-3">Cliente</dt>
-            <dd class="col-sm-9">{{ $project->cliente->nome ?? 'N/A' }}</dd>
+            <dd class="col-sm-9">{{ $projeto->cliente->nome ?? 'N/A' }}</dd>
         </dl>
-        <a href="{{ route('projects.index') }}" class="btn btn-secondary">Voltar</a>
+        <a href="{{ route('projetos.index') }}" class="btn btn-secondary">Voltar</a>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

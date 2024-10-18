@@ -18,7 +18,7 @@ class TarefaController extends Controller
     // Mostra o formulário para criar uma nova tarefa
     public function create()
     {
-        $projetos = Projetos::all();
+        $projetos = Projeto::all();
         return view('tarefas.create', compact('projetos'));
     }
 

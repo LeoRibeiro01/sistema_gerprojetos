@@ -28,11 +28,11 @@
                 <input type="date" class="form-control" id="data_termino" name="data_termino">
             </div>
             <div class="mb-3">
-                <label for="project_id" class="form-label">Projeto</label>
-                <select class="form-select" id="project_id" name="project_id" required>
+                <label for="projeto_id" class="form-label">Projeto</label>
+                <select class="form-select" id="projeto_id" name="projeto_id" required>
                     <option value="">Selecione o Projeto</option>
-                    @foreach ($project as $project)
-                        <option value="{{ $project->id }}">{{ $project->titulo }}</option>
+                    @foreach ($projetos as $projeto)
+                        <option value="{{ $projeto->id }}">{{ $projeto->titulo }}</option>
                     @endforeach
                 </select>
             </div>

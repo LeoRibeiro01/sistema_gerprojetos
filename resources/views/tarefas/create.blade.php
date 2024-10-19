@@ -11,23 +11,7 @@
         <h1>Criar Nova Tarefa</h1>
 
         <!-- Verifica se o usuário tem permissão para criar tarefas -->
-        @if (!auth()->check() || !auth()->user()->isAdmin())
-            <div class="alert alert-danger">
-                <strong>Acesso negado!</strong> Você não tem permissão para criar tarefas.
-                <a href="{{ route('home') }}" class="btn btn-secondary mt-2">Voltar à Página Principal</a>
-            </div>
-        @else
-            <!-- Exibir mensagens de erro de validação -->
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
+        @if (auth()->check() && auth()->user()->isAdmin())
             <form action="{{ route('tarefas.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
@@ -72,6 +56,11 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
+            @else
+            <div class="alert alert-danger" role="alert">
+                Você não tem permissão para criar uma tarefa.
+            </div>
+            <a href="{{ route('home') }}" class="btn btn-secondary">Voltar à Página Principal</a>
         @endif
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('data_inicio');
             $table->date('data_termino')->nullable();
             $table->foreignId('projeto_id')->constrained('projetos')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

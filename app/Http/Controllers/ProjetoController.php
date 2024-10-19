@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Projeto;
-use App\Models\User; // Atualizando para importar o modelo User
+use App\Models\User; // Importando o modelo User
 
 class ProjetoController extends Controller
 {
@@ -30,7 +30,7 @@ class ProjetoController extends Controller
             'descricao' => 'nullable|string',
             'data_inicio' => 'required|date',
             'data_termino' => 'nullable|date',
-            'user_id' => 'required|exists:users,id', // Atualizando para verificar no modelo User
+            'user_id' => 'required|exists:users,id', // Verificando se o user_id existe na tabela users
         ]);
 
         $projeto = new Projeto();
@@ -38,7 +38,7 @@ class ProjetoController extends Controller
         $projeto->descricao = $request->descricao;
         $projeto->data_inicio = $request->data_inicio;
         $projeto->data_termino = $request->data_termino;
-        $projeto->user_id = $request->user_id; // Isso deve ser um 'user_id' agora, se for o caso
+        $projeto->user_id = $request->user_id; // Atribuindo o user_id ao projeto
         $projeto->save();
 
         return redirect()->route('projeto.index');
@@ -65,7 +65,7 @@ class ProjetoController extends Controller
             'descricao' => 'nullable|string',
             'data_inicio' => 'required|date',
             'data_termino' => 'nullable|date',
-            'user_id' => 'required|exists:users,id', // Atualizando para verificar no modelo User
+            'user_id' => 'required|exists:users,id', // Verificando se o user_id existe na tabela users
         ]);
 
         $projeto->update([
@@ -73,7 +73,7 @@ class ProjetoController extends Controller
             'descricao' => $request->descricao,
             'data_inicio' => $request->data_inicio,
             'data_termino' => $request->data_termino,
-            'user_id' => $request->user_id, // Isso deve ser um 'user_id' agora, se for o caso
+            'user_id' => $request->user_id, // Atualizando o user_id do projeto
         ]);
 
         return redirect()->route('projeto.index');

@@ -9,6 +9,7 @@
 <body>
     <div class="container mt-4">
         <h1>Editar Projeto</h1>
+        @if (auth()->check() && auth()->user()->isAdmin())
         <form action="{{ route('projeto.update', $projeto->id) }}" method="POST">
             @csrf
             @method('PUT')
@@ -38,6 +39,12 @@
             </div>
             <button type="submit" class="btn btn-primary">Salvar</button>
         </form>
+        @else
+        <div class="alert alert-danger" role="alert">
+            Você não tem permissão para editar um projeto.
+        </div>
+        <a href="{{ route('home') }}" class="btn btn-secondary">Voltar à Página Principal</a>
+    @endif
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

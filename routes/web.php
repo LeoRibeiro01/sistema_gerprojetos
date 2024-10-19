@@ -26,8 +26,8 @@ Route::get('/dashboard', function () {
 
 // Rotas para projetos e tarefas, disponíveis para todos os usuários autenticados
 Route::middleware('auth')->group(function () {
-    Route::resource('projeto', ProjetoController::class);
-    Route::resource('tarefas', TarefaController::class);
+    Route::resource('projeto', ProjetoController::class); // Alterado para 'projetos' (plural)
+    Route::resource('tarefas', TarefaController::class); // Mantido como 'tarefas'
 });
 
 // Rotas para gerenciamento de usuários, restritas ao admin

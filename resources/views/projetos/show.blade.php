@@ -19,9 +19,9 @@
             <dt class="col-sm-3">Data Término</dt>
             <dd class="col-sm-9">{{ $projeto->data_termino }}</dd>
             <dt class="col-sm-3">Cliente</dt>
-            <dd class="col-sm-9">{{ $projeto->cliente->nome ?? 'N/A' }}</dd>
+            <dd class="col-sm-9">{{ $projeto->user->name}}</dd>
         </dl>
-        <a href="{{ route('projetos.index') }}" class="btn btn-secondary">Voltar</a>
+        <a href="{{ route('projeto.index') }}" class="btn btn-secondary">Voltar</a>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

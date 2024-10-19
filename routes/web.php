@@ -10,11 +10,8 @@ use Illuminate\Support\Facades\Route;
 |---------------------------------------------------------------------------
 | Web Routes
 |---------------------------------------------------------------------------
-|
-| Aqui você pode registrar as rotas web para sua aplicação. Essas rotas
-| são carregadas pelo RouteServiceProvider e todas serão atribuídas ao grupo
-| de middleware "web".
-|
+| Aqui você pode registrar as rotas web para sua aplicação.
+| Todas as rotas atribuídas ao grupo "web" serão carregadas pelo RouteServiceProvider.
 */
 
 // Página principal
@@ -27,14 +24,16 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-// Rotas para projetos
-Route::resource('projeto', ProjetoController::class);
+// Rotas para projetos e tarefas, disponíveis para todos os usuários autenticados
+Route::middleware('auth')->group(function () {
+    Route::resource('projeto', ProjetoController::class);
+    Route::resource('tarefas', TarefaController::class);
+});
 
-// Rotas para tarefas
-Route::resource('tarefas', TarefaController::class);
-
-// Rotas para usuários
-Route::resource('users', UserController::class);
+// Rotas para gerenciamento de usuários, restritas ao admin
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('users', UserController::class);
+});
 
 // Login e Cadastro com Breeze
 Route::get('login', function () {
@@ -48,7 +47,7 @@ Route::get('register', function () {
 // Rotas de autenticação geradas pelo Breeze
 require __DIR__.'/auth.php';
 
-// Rotas do ProfileController
+// Rotas do ProfileController, acessíveis a todos os usuários autenticados
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

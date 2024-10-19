@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,11 +11,22 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-
     public function projects()
-{
-    return $this->hasMany(Project::class);
-}
+    {
+        return $this->hasMany(Project::class);
+    }
+
+    /**
+     * Verifica se o usuário é um administrador.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->email === 'admin@gmail.com'; // Substitua pelo e-mail do admin ou pela lógica que você usa
+        // Exemplo com campo role:
+        // return $this->role === 'admin'; // Caso utilize um campo para definir o tipo de usuário
+    }
 
     /**
      * The attributes that are mass assignable.

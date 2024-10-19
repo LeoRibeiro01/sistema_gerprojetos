@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Projeto;
-use App\Models\Cliente;
+use App\Models\User; // Atualizando para importar o modelo User
 
 class ProjetoController extends Controller
 {
@@ -18,8 +18,8 @@ class ProjetoController extends Controller
     // Mostra o formulário para criar um novo projeto
     public function create()
     {
-        $clientes = Cliente::orderBy('nome')->get(); // Busca clientes ordenados
-        return view('projetos.create', compact('clientes'));
+        $users = User::where('is_admin', false)->orderBy('name')->get(); // Busca usuários não administradores ordenados
+        return view('projetos.create', compact('users')); // Passa 'users' para a view
     }
 
     // Armazena um novo projeto no banco de dados
@@ -30,7 +30,7 @@ class ProjetoController extends Controller
             'descricao' => 'nullable|string',
             'data_inicio' => 'required|date',
             'data_termino' => 'nullable|date',
-            'cliente_id' => 'required|exists:clientes,id',
+            'user_id' => 'required|exists:users,id', // Atualizando para verificar no modelo User
         ]);
 
         $projeto = new Projeto();
@@ -38,10 +38,10 @@ class ProjetoController extends Controller
         $projeto->descricao = $request->descricao;
         $projeto->data_inicio = $request->data_inicio;
         $projeto->data_termino = $request->data_termino;
-        $projeto->cliente_id = $request->cliente_id;
+        $projeto->user_id = $request->user_id; // Isso deve ser um 'user_id' agora, se for o caso
         $projeto->save();
 
-        return redirect()->route('projetos.index');
+        return redirect()->route('projeto.index');
     }
 
     // Exibe os detalhes de um projeto específico
@@ -53,8 +53,8 @@ class ProjetoController extends Controller
     // Mostra o formulário para editar um projeto existente
     public function edit(Projeto $projeto)
     {
-        $clientes = Cliente::all();
-        return view('projetos.edit', compact('projeto', 'clientes'));
+        $users = User::where('is_admin', false)->orderBy('name')->get(); // Busca usuários não administradores
+        return view('projetos.edit', compact('projeto', 'users')); // Passa 'users' para a view
     }
 
     // Atualiza um projeto existente no banco de dados
@@ -65,7 +65,7 @@ class ProjetoController extends Controller
             'descricao' => 'nullable|string',
             'data_inicio' => 'required|date',
             'data_termino' => 'nullable|date',
-            'cliente_id' => 'required|exists:clientes,id',
+            'user_id' => 'required|exists:users,id', // Atualizando para verificar no modelo User
         ]);
 
         $projeto->update([
@@ -73,16 +73,16 @@ class ProjetoController extends Controller
             'descricao' => $request->descricao,
             'data_inicio' => $request->data_inicio,
             'data_termino' => $request->data_termino,
-            'cliente_id' => $request->cliente_id,
+            'user_id' => $request->user_id, // Isso deve ser um 'user_id' agora, se for o caso
         ]);
 
-        return redirect()->route('projetos.index');
+        return redirect()->route('projeto.index');
     }
 
     // Remove um projeto do banco de dados
     public function destroy(Projeto $projeto)
     {
         $projeto->delete();
-        return redirect()->route('projetos.index');
+        return redirect()->route('projeto.index');
     }
 }

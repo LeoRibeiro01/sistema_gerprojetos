@@ -9,7 +9,7 @@
 <body>
     <div class="container mt-4">
         <h1>Editar Projeto</h1>
-        <form action="{{ route('projetos.update', $projeto->id) }}" method="POST">
+        <form action="{{ route('projeto.update', $projeto->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -29,10 +29,10 @@
                 <input type="date" class="form-control" id="data_termino" name="data_termino" value="{{ $projeto->data_termino }}">
             </div>
             <div class="mb-3">
-                <label for="cliente_id" class="form-label">Cliente</label>
-                <select class="form-select" id="cliente_id" name="cliente_id" required>
-                    @foreach ($clientes as $cliente)
-                        <option value="{{ $cliente->id }}" {{ $cliente->id == $projeto->cliente_id ? 'selected' : '' }}>{{ $cliente->nome }}</option>
+                <label for="user_id" class="form-label">Cliente</label>
+                <select class="form-select" id="user_id" name="user_id" required>
+                    @foreach ($users as $user)
+                        <option value="{{ $user->id }}" {{ $user->id == $projeto->user_id ? 'selected' : '' }}>{{ $user->name }}</option>
                     @endforeach
                 </select>
             </div>

@@ -14,16 +14,16 @@ class Projeto extends Model
         'descricao',
         'data_inicio',
         'data_termino',
-        'cliente_id',
+        'user_id',
     ];
 
-    public function cliente()
+    public function user()
     {
-        return $this->belongsTo(Cliente::class, 'cliente_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function tarefas()
     {
-        return $this->hasMany(Tarefa::class, 'projeto_id');
+        return $this->hasMany(Tarefa::class, 'user_id');
     }
 }

@@ -14,9 +14,9 @@ class Tarefa extends Model
         return $this->belongsTo(Projeto::class, 'projeto_id');
     }
 
-    public function responsavel()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'responsavel_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 }

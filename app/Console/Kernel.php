@@ -30,4 +30,5 @@ class Kernel extends ConsoleKernel
         'admin' => \App\Http\Middleware\CheckAdmin::class,
     ];
 
+
 }

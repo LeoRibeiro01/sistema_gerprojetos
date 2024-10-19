@@ -6,19 +6,16 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CheckClient
+class CheckAdmin
 {
-    /**
-     * Handle an incoming request.
-     */
     public function handle(Request $request, Closure $next)
     {
-        // Verifica se o usuário está autenticado e se é um administrador
+        // Verifica se o usuário está autenticado e se é um admin
         if (Auth::check() && Auth::user()->is_admin) {
-            return $next($request); // Permite o acesso
+            return $next($request);
         }
 
-        // Redireciona para a home com mensagem de erro se não for admin
-        return redirect('/')->with('error', 'Acesso negado. Você não tem permissão para acessar esta área.');
+        return redirect()->route('home')->with('error', 'Acesso negado'); // Redireciona se não for admin
     }
 }
+

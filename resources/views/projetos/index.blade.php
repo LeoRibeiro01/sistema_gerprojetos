@@ -9,15 +9,14 @@
         body {
             background-color: #f8f9fa; /* Cor de fundo suave */
         }
+        h1 {
+            color: #343a40; /* Cor do título */
+        }
         .table thead th {
             background-color: #e9ecef; /* Cabeçalho da tabela em cinza claro */
         }
-        .btn-custom {
-            background-color: #6c757d; /* Cor personalizada para botões */
-            color: white;
-        }
-        .btn-custom:hover {
-            background-color: #5a6268; /* Efeito hover para botões */
+        .table th, .table td {
+            vertical-align: middle; /* Centraliza o texto nas células */
         }
     </style>
 </head>
@@ -26,14 +25,12 @@
         <h1 class="mb-4">Lista de Projetos</h1>
         <a href="{{ route('projeto.create') }}" class="btn btn-primary mb-3">Novo Projeto</a>
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Título</th>
                         <th>Descrição</th>
-                        <th>Data Início</th>
-                        <th>Data Término</th>
                         <th>Cliente</th>
                         <th>Ações</th>
                     </tr>
@@ -44,8 +41,8 @@
                         <td>{{ $projeto->id }}</td>
                         <td>{{ $projeto->titulo }}</td>
                         <td>{{ $projeto->descricao }}</td>
-                        <td>{{ $projeto->data_inicio }}</td>
-                        <td>{{ $projeto->data_termino }}</td>
+
+
                         <td>{{ $projeto->user->name ?? 'N/A' }}</td>
                         <td>
                             <a href="{{ route('projeto.show', $projeto->id) }}" class="btn btn-info btn-sm">Ver</a>

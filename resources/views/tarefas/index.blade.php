@@ -5,45 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Lista de Tarefas</title>
+    <style>
+        body {
+            background-color: #f8f9fa; /* Fundo suave */
+        }
+        h1 {
+            color: #343a40; /* Cor do título */
+        }
+        .table th, .table td {
+            vertical-align: middle; /* Centraliza o texto nas células */
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-4">
-        <h1>Tarefas</h1>
+        <h1 class="mb-4">Lista de Tarefas</h1>
         <a href="{{ route('tarefas.create') }}" class="btn btn-primary mb-3">Nova Tarefa</a>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Título</th>
-                    <th>Descrição</th>
-                    <th>Data Início</th>
-                    <th>Data Término</th>
-                    <th>Projeto</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($tarefas as $tarefa)
-                <tr>
-                    <td>{{ $tarefa->id }}</td>
-                    <td>{{ $tarefa->titulo }}</td>
-                    <td>{{ $tarefa->descricao }}</td>
-                    <td>{{ $tarefa->data_inicio }}</td>
-                    <td>{{ $tarefa->data_termino }}</td>
-                    <td>{{ $tarefa->projeto->titulo ?? 'N/A' }}</td>
-                    <td>
-                        <a href="{{ route('tarefas.show', $tarefa->id) }}" class="btn btn-info btn-sm">Ver</a>
-                        <a href="{{ route('tarefas.edit', $tarefa->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                        <form action="{{ route('tarefas.destroy', $tarefa->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Descrição</th>
+                        <th>Data Início</th>
+                        <th>Data Término</th>
+                        <th>Projeto</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($tarefas as $tarefa)
+                    <tr>
+                        <td>{{ $tarefa->id }}</td>
+                        <td>{{ $tarefa->titulo }}</td>
+                        <td>{{ $tarefa->descricao }}</td>
+                        <td>{{ $tarefa->data_inicio ? \Carbon\Carbon::parse($tarefa->data_inicio)->format('d/m/Y') : 'N/A' }}</td>
+                        <td>{{ $tarefa->data_termino ? \Carbon\Carbon::parse($tarefa->data_termino)->format('d/m/Y') : 'N/A' }}</td>
+                        <td>{{ $tarefa->projeto->titulo ?? 'N/A' }}</td>
+                        <td>
+                            <a href="{{ route('tarefas.show', $tarefa->id) }}" class="btn btn-info btn-sm">Ver</a>
+                            <a href="{{ route('tarefas.edit', $tarefa->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                            <form action="{{ route('tarefas.destroy', $tarefa->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

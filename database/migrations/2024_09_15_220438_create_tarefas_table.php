@@ -16,6 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->text('descricao')->nullable();
+            $table->date('data_inicio');
+            $table->date('data_termino')->nullable();
             $table->foreignId('projeto_id')->constrained('projetos')->onDelete('cascade');
             $table->timestamps();
         });

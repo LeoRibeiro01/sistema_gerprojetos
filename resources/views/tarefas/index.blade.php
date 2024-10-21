@@ -7,14 +7,54 @@
     <title>Lista de Tarefas</title>
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f4f6f9;
+            font-family: 'Arial', sans-serif;
         }
+
         h1 {
-            color: #343a40;
+            color: #2c3e50;
         }
+
         .table th, .table td {
             vertical-align: middle;
         }
+
+        .btn {
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .badge {
+            font-size: 1.1em;
+        }
+
+        .table-responsive {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .table thead {
+            background-color: #e9ecef;
+        }
+
+        .form-control {
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .checkbox-label {
+            margin-left: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -22,7 +62,7 @@
         <h1 class="mb-4">Lista de Tarefas</h1>
 
         <!-- Formulário de filtro -->
-        <form method="GET" action="{{ route('tarefas.index') }}" class="mb-3">
+        <form method="GET" action="{{ route('tarefas.index') }}" class="mb-4">
             <div class="row">
                 <div class="col-md-3">
                     <input type="text" name="titulo" class="form-control" placeholder="Filtrar por título" value="{{ request('titulo') }}">
@@ -41,13 +81,14 @@
                 <div class="col-md-2">
                     <input type="date" name="data_termino" class="form-control" placeholder="Data de término" value="{{ request('data_termino') }}">
                 </div>
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                <div class="col-md-3 d-flex align-items-center">
+                    <button type="submit" class="btn btn-primary w-100">Filtrar</button>
                 </div>
             </div>
         </form>
 
-        <a href="{{ route('tarefas.create') }}" class="btn btn-primary mb-3">Nova Tarefa</a>
+        <a href="{{ route('tarefas.create') }}" class="btn btn-success mb-3">Nova Tarefa</a>
+
         <div class="table-responsive">
             <table class="table table-hover table-bordered">
                 <thead class="table-light">
@@ -71,6 +112,7 @@
                                 @csrf
                                 @method('PATCH')
                                 <input type="checkbox" onchange="this.form.submit()" {{ $tarefa->status == 'concluida' ? 'checked' : '' }}>
+                                <label class="checkbox-label"></label>
                             </form>
                         </td>
                         <td>{{ $tarefa->id }}</td>
@@ -103,6 +145,7 @@
             </table>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

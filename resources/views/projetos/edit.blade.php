@@ -37,6 +37,16 @@
                     @endforeach
                 </select>
             </div>
+
+            <!-- Status do projeto -->
+            <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select class="form-select" id="status" name="status" required>
+                        <option value="pendente" {{ $projeto->status == 'pendente' ? 'selected' : '' }}>Pendente</option>
+                        <option value="atrasado" {{ $projeto->status == 'atrasado' ? 'selected' : '' }}>Atrasado</option>
+                        <option value="concluido" {{ $projeto->status == 'concluido' ? 'selected' : '' }}>Concluído</option>
+                    </select>
+                </div>
             <button type="submit" class="btn btn-primary">Salvar</button>
         </form>
         @else

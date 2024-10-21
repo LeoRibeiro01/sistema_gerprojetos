@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('descricao')->nullable();
             $table->date('data_inicio');
             $table->date('data_termino')->nullable();
+            $table->enum('status', ['pendente', 'atrasado', 'concluido'])->default('pendente'); // Campo status
             $table->foreignId('user_id') // Alterado de cliente_id para user_id
                   ->constrained('users') // Referência à tabela users
                   ->onDelete('cascade'); // Mantém o comportamento de exclusão em cascata

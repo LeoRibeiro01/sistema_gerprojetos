@@ -29,9 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('projeto', ProjetoController::class); // Alterado para 'projetos' (plural)
     Route::resource('tarefas', TarefaController::class); // Mantido como 'tarefas'
     
-    // Rota para atualizar o status de uma tarefa
+    
     // Rota para concluir uma tarefa
     Route::patch('/tarefas/{id}/concluir', [TarefaController::class, 'concluir'])->name('tarefas.concluir');
+    Route::patch('/projeto/{id}/concluir', [TarefaController::class, 'concluir'])->name('projeto.concluir');
 
 });
 

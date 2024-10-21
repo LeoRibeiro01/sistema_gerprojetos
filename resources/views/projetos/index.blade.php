@@ -23,6 +23,33 @@
 <body>
     <div class="container mt-4">
         <h1 class="mb-4">Lista de Projetos</h1>
+
+        <!-- Formulário de filtro -->
+        <form method="GET" action="{{ route('projeto.index') }}" class="mb-3">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" name="titulo" class="form-control" placeholder="Filtrar por título" value="{{ request('titulo') }}">
+                </div>
+                <div class="col-md-2">
+                    <select name="status" class="form-control">
+                        <option value="">Filtrar por status</option>
+                        <option value="pendente" {{ request('status') == 'pendente' ? 'selected' : '' }}>Pendente</option>
+                        <option value="atrasado" {{ request('status') == 'atrasado' ? 'selected' : '' }}>Atrasado</option>
+                        <option value="concluido" {{ request('status') == 'concluido' ? 'selected' : '' }}>Concluído</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="date" name="data_inicio" class="form-control" placeholder="Data de início" value="{{ request('data_inicio') }}">
+                </div>
+                <div class="col-md-2">
+                    <input type="date" name="data_termino" class="form-control" placeholder="Data de término" value="{{ request('data_termino') }}">
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                </div>
+            </div>
+        </form>
+
         <a href="{{ route('projeto.create') }}" class="btn btn-primary mb-3">Novo Projeto</a>
         <div class="table-responsive">
             <table class="table table-hover table-bordered">
@@ -31,19 +58,31 @@
                         <th>ID</th>
                         <th>Título</th>
                         <th>Descrição</th>
+                        <th>Data Início</th>
+                        <th>Data Término</th>
                         <th>Cliente</th>
+                        <th>Status</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($projetos as $projeto)
+                    @foreach ($projeto as $projeto)
                     <tr>
                         <td>{{ $projeto->id }}</td>
                         <td>{{ $projeto->titulo }}</td>
                         <td>{{ $projeto->descricao }}</td>
-
-
+                        <td>{{ $projeto->data_inicio ? \Carbon\Carbon::parse($projeto->data_inicio)->format('d/m/Y') : 'N/A' }}</td>
+                        <td>{{ $projeto->data_termino ? \Carbon\Carbon::parse($projeto->data_termino)->format('d/m/Y') : 'N/A' }}</td>
                         <td>{{ $projeto->user->name ?? 'N/A' }}</td>
+                        <td>
+                            @if ($projeto->status == 'pendente')
+                                <span class="badge bg-warning">Pendente</span>
+                            @elseif ($projeto->status == 'atrasada')
+                                <span class="badge bg-danger">Atrasado</span>
+                            @else
+                                <span class="badge bg-success">Concluído</span>
+                            @endif
+                        </td>
                         <td>
                             <a href="{{ route('projeto.show', $projeto->id) }}" class="btn btn-info btn-sm">Ver</a>
                             <a href="{{ route('projeto.edit', $projeto->id) }}" class="btn btn-warning btn-sm">Editar</a>

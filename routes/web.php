@@ -7,9 +7,9 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
-|---------------------------------------------------------------------------
+|--------------------------------------------------------------------------
 | Web Routes
-|---------------------------------------------------------------------------
+|--------------------------------------------------------------------------
 | Aqui você pode registrar as rotas web para sua aplicação.
 | Todas as rotas atribuídas ao grupo "web" serão carregadas pelo RouteServiceProvider.
 */
@@ -28,6 +28,11 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::resource('projeto', ProjetoController::class); // Alterado para 'projetos' (plural)
     Route::resource('tarefas', TarefaController::class); // Mantido como 'tarefas'
+    
+    // Rota para atualizar o status de uma tarefa
+    // Rota para concluir uma tarefa
+    Route::patch('/tarefas/{id}/concluir', [TarefaController::class, 'concluir'])->name('tarefas.concluir');
+
 });
 
 // Rotas para gerenciamento de usuários, restritas ao admin

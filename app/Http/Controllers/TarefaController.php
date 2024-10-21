@@ -18,7 +18,7 @@ class TarefaController extends Controller
     // Mostra o formulário para criar uma nova tarefa
     public function create()
     {
-        $projetos = Projeto::all(); // Corrigido para usar a classe Projeto com "P" maiúsculo
+        $projetos = Projeto::all(); 
         return view('tarefas.create', compact('projetos'));
     }
 
@@ -30,7 +30,7 @@ class TarefaController extends Controller
             'descricao' => 'nullable|string',
             'data_inicio' => 'required|date',
             'data_termino' => 'nullable|date',
-            'projeto_id' => 'required|exists:projetos,id', // Verifica se o projeto_id existe
+            'projeto_id' => 'required|exists:projetos,id',
         ]);
 
         $tarefa = new Tarefa();
@@ -38,8 +38,9 @@ class TarefaController extends Controller
         $tarefa->descricao = $request->descricao;
         $tarefa->data_inicio = $request->data_inicio;
         $tarefa->data_termino = $request->data_termino;
-        $tarefa->projeto_id = $request->projeto_id; // Atribuindo o projeto_id à tarefa
-        $tarefa->user_id = auth()->id(); // Atribui o ID do usuário autenticado
+        $tarefa->projeto_id = $request->projeto_id; 
+        $tarefa->user_id = auth()->id();
+        $tarefa->status = 'pendente'; // Define o status inicial como "pendente"
         $tarefa->save();
 
         return redirect()->route('tarefas.index')->with('success', 'Tarefa criada com sucesso!');
@@ -54,7 +55,7 @@ class TarefaController extends Controller
     // Mostra o formulário para editar uma tarefa existente
     public function edit(Tarefa $tarefa)
     {
-        $projetos = Projeto::all(); // Corrigido para usar a classe Projeto com "P" maiúsculo
+        $projetos = Projeto::all(); 
         return view('tarefas.edit', compact('tarefa', 'projetos'));
     }
 
@@ -66,18 +67,31 @@ class TarefaController extends Controller
             'descricao' => 'nullable|string',
             'data_inicio' => 'required|date',
             'data_termino' => 'nullable|date',
-            'projeto_id' => 'required|exists:projetos,id', // Verifica se o projeto_id existe
+            'projeto_id' => 'required|exists:projetos,id',
+            'status' => 'required|string|in:pendente,atrasada,concluida', // Validação do campo status
         ]);
 
         $tarefa->titulo = mb_strtoupper($request->titulo, 'UTF-8');
         $tarefa->descricao = $request->descricao;
         $tarefa->data_inicio = $request->data_inicio;
         $tarefa->data_termino = $request->data_termino;
-        $tarefa->projeto_id = $request->projeto_id; // Atualizando o projeto_id da tarefa
+        $tarefa->projeto_id = $request->projeto_id;
+        $tarefa->status = $request->status; // Atualiza o status com o valor enviado no formulário
 
         $tarefa->save();
 
         return redirect()->route('tarefas.index')->with('success', 'Tarefa atualizada com sucesso!');
+    }
+
+    public function concluir($id)
+    {
+        $tarefa = Tarefa::findOrFail($id);
+
+        // Atualiza o status para 'concluída'
+        $tarefa->status = $tarefa->status == 'concluida' ? 'pendente' : 'concluida';
+        $tarefa->save();
+
+        return redirect()->route('tarefas.index')->with('success', 'Tarefa atualizada com sucesso.');
     }
 
     // Remove uma tarefa do banco de dados
@@ -85,7 +99,6 @@ class TarefaController extends Controller
     {
         $tarefa = Tarefa::findOrFail($id);
 
-        // Verifica se o usuário é admin
         if (!auth()->user()->is_admin) {
             return redirect()->route('tarefas.index')->with('error', 'Você não tem permissão para excluir esta tarefa.');
         }

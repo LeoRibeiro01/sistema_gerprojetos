@@ -25,24 +25,44 @@
             <table class="table table-hover table-bordered">
                 <thead class="table-light">
                     <tr>
+                        <th>Concluir</th>
                         <th>ID</th>
                         <th>Título</th>
                         <th>Descrição</th>
                         <th>Data Início</th>
                         <th>Data Término</th>
                         <th>Projeto</th>
+                        <th>Status</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($tarefas as $tarefa)
                     <tr>
+                        <!-- Checkbox para concluir tarefa -->
+                        <td>
+                            <form action="{{ route('tarefas.concluir', $tarefa->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('PATCH')
+                                <input type="checkbox" onchange="this.form.submit()" {{ $tarefa->status == 'concluida' ? 'checked' : '' }}>
+                            </form>
+                        </td>
                         <td>{{ $tarefa->id }}</td>
                         <td>{{ $tarefa->titulo }}</td>
                         <td>{{ $tarefa->descricao }}</td>
                         <td>{{ $tarefa->data_inicio ? \Carbon\Carbon::parse($tarefa->data_inicio)->format('d/m/Y') : 'N/A' }}</td>
                         <td>{{ $tarefa->data_termino ? \Carbon\Carbon::parse($tarefa->data_termino)->format('d/m/Y') : 'N/A' }}</td>
                         <td>{{ $tarefa->projeto->titulo ?? 'N/A' }}</td>
+                        <!-- Exibe o status da tarefa -->
+                        <td>
+                            @if ($tarefa->status == 'pendente')
+                                <span class="badge bg-warning">Pendente</span>
+                            @elseif ($tarefa->status == 'atrasada')
+                                <span class="badge bg-danger">Atrasada</span>
+                            @else
+                                <span class="badge bg-success">Concluída</span>
+                            @endif
+                        </td>
                         <td>
                             <a href="{{ route('tarefas.show', $tarefa->id) }}" class="btn btn-info btn-sm">Ver</a>
                             <a href="{{ route('tarefas.edit', $tarefa->id) }}" class="btn btn-warning btn-sm">Editar</a>

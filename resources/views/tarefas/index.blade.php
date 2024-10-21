@@ -55,9 +55,60 @@
             margin-left: 10px;
         }
 
+        /* Estilo da Navbar */
+        .navbar {
+            background-color: #001f3f; /* Azul marinho */
+            padding: 0.3% 2rem;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            width: 107px;
+            height: 60px;
+            margin-right: 20px;
+        }
+
+        .navbar .nav-link {
+            color: white;
+        }
+
+        .navbar .nav-link:hover {
+            color: #f8f9fa;
+        }
+
+        /* Botão de voltar */
+        .btn-back {
+            background-color: #001f3f; /* Mesma cor da navbar */
+            padding: 30px;
+            border: none;
+        }
+
+        .btn-back img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .btn-back:hover {
+            background-color: #004085; /* Azul mais escuro */
+        }
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <!-- Imagem de voltar dentro da marca da navbar -->
+            <a href="{{ route('home') }}" class="navbar-brand">
+                <img src="https://infotech-solucoes.com/novo/public/img/logo_infotech.png" alt="Voltar para a home">
+            </a>
+        </div>
+    </nav>
+
     <div class="container mt-4">
         <h1 class="mb-4">Lista de Tarefas</h1>
 
@@ -87,8 +138,10 @@
             </div>
         </form>
 
+        <!-- Botão para criar nova tarefa -->
         <a href="{{ route('tarefas.create') }}" class="btn btn-success mb-3">Nova Tarefa</a>
 
+        <!-- Tabela de Tarefas -->
         <div class="table-responsive">
             <table class="table table-hover table-bordered">
                 <thead class="table-light">
@@ -130,7 +183,7 @@
                                 <span class="badge bg-success">Concluída</span>
                             @endif
                         </td>
-                        <td>
+                        <td class="actions-btns">
                             <a href="{{ route('tarefas.show', $tarefa->id) }}" class="btn btn-info btn-sm">Ver</a>
                             <a href="{{ route('tarefas.edit', $tarefa->id) }}" class="btn btn-warning btn-sm">Editar</a>
                             <form action="{{ route('tarefas.destroy', $tarefa->id) }}" method="POST" style="display:inline;">

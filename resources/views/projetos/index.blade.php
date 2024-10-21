@@ -70,12 +70,21 @@
 
         /* Estilo da Navbar */
         .navbar {
-            background-color: #003366; /* Azul marinho */
+            background-color: #001f3f; /* Azul marinho */
+            padding: 0.3% 2rem;
         }
 
         .navbar-brand {
             font-size: 1.5rem;
             color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            width: 107px;
+            height: 60px;
+            margin-right: 20px;
         }
 
         .navbar .nav-link {
@@ -86,20 +95,16 @@
             color: #f8f9fa;
         }
 
+        /* Botão de voltar */
         .btn-back {
-            background-color: #0056b3; /* Azul escuro */
-            border-radius: 50%;
-            padding: 10px;
-            width: 50px;
-            height: 50px;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #001f3f; /* Mesma cor da navbar */
+            padding: 30px;
+            border: none;
         }
 
         .btn-back img {
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
         }
 
         .btn-back:hover {
@@ -110,16 +115,18 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <!-- Botão de voltar para a home -->
-            <a href="{{ route('home') }}" class="btn-back">
+            <!-- Imagem de voltar dentro da marca da navbar -->
+            <a href="{{ route('home') }}" class="navbar-brand">
                 <img src="https://infotech-solucoes.com/novo/public/img/logo_infotech.png" alt="Voltar para a home">
+                
             </a>
-
-            <a class="navbar-brand" href="{{ route('projeto.index') }}">Lista de Projetos</a>
         </div>
     </nav>
 
     <div class="container mt-4">
+    
+    <h1 class="mb-4">Lista de Projetos</h1>
+            
         <!-- Formulário de filtro -->
         <form method="GET" action="{{ route('projeto.index') }}" class="filter-form mb-4">
             <div class="row">

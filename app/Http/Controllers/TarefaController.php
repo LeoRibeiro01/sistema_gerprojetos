@@ -8,10 +8,34 @@ use App\Models\Projeto;
 
 class TarefaController extends Controller
 {
-    // Exibe uma lista de todas as tarefas
-    public function index()
+    // Exibe uma lista de todas as tarefas com filtros aplicados
+    public function index(Request $request)
     {
-        $tarefas = Tarefa::all();
+        $tarefas = Tarefa::query();
+
+        // Filtro por título
+        if ($request->has('titulo') && $request->titulo != '') {
+            $tarefas->where('titulo', 'like', '%' . $request->titulo . '%');
+        }
+
+        // Filtro por status
+        if ($request->has('status') && $request->status != '') {
+            $tarefas->where('status', $request->status);
+        }
+
+        // Filtro por data (data de início)
+        if ($request->has('data_inicio') && $request->data_inicio != '') {
+            $tarefas->whereDate('data_inicio', '=', $request->data_inicio);
+        }
+
+        // Filtro por data (data de término)
+        if ($request->has('data_termino') && $request->data_termino != '') {
+            $tarefas->whereDate('data_termino', '=', $request->data_termino);
+        }
+
+        // Ordenar por ID ou outro critério (opcional)
+        $tarefas = $tarefas->get();
+
         return view('tarefas.index', compact('tarefas'));
     }
 
@@ -83,11 +107,12 @@ class TarefaController extends Controller
         return redirect()->route('tarefas.index')->with('success', 'Tarefa atualizada com sucesso!');
     }
 
+    // Conclui uma tarefa (muda o status para "concluída")
     public function concluir($id)
     {
         $tarefa = Tarefa::findOrFail($id);
 
-        // Atualiza o status para 'concluída'
+        // Alterna o status entre "concluída" e "pendente"
         $tarefa->status = $tarefa->status == 'concluida' ? 'pendente' : 'concluida';
         $tarefa->save();
 

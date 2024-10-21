@@ -7,19 +7,46 @@
     <title>Lista de Tarefas</title>
     <style>
         body {
-            background-color: #f8f9fa; /* Fundo suave */
+            background-color: #f8f9fa;
         }
         h1 {
-            color: #343a40; /* Cor do título */
+            color: #343a40;
         }
         .table th, .table td {
-            vertical-align: middle; /* Centraliza o texto nas células */
+            vertical-align: middle;
         }
     </style>
 </head>
 <body>
     <div class="container mt-4">
         <h1 class="mb-4">Lista de Tarefas</h1>
+
+        <!-- Formulário de filtro -->
+        <form method="GET" action="{{ route('tarefas.index') }}" class="mb-3">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" name="titulo" class="form-control" placeholder="Filtrar por título" value="{{ request('titulo') }}">
+                </div>
+                <div class="col-md-2">
+                    <select name="status" class="form-control">
+                        <option value="">Filtrar por status</option>
+                        <option value="pendente" {{ request('status') == 'pendente' ? 'selected' : '' }}>Pendente</option>
+                        <option value="atrasada" {{ request('status') == 'atrasada' ? 'selected' : '' }}>Atrasada</option>
+                        <option value="concluida" {{ request('status') == 'concluida' ? 'selected' : '' }}>Concluída</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="date" name="data_inicio" class="form-control" placeholder="Data de início" value="{{ request('data_inicio') }}">
+                </div>
+                <div class="col-md-2">
+                    <input type="date" name="data_termino" class="form-control" placeholder="Data de término" value="{{ request('data_termino') }}">
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                </div>
+            </div>
+        </form>
+
         <a href="{{ route('tarefas.create') }}" class="btn btn-primary mb-3">Nova Tarefa</a>
         <div class="table-responsive">
             <table class="table table-hover table-bordered">
@@ -39,7 +66,6 @@
                 <tbody>
                     @foreach ($tarefas as $tarefa)
                     <tr>
-                        <!-- Checkbox para concluir tarefa -->
                         <td>
                             <form action="{{ route('tarefas.concluir', $tarefa->id) }}" method="POST" style="display:inline;">
                                 @csrf
@@ -53,7 +79,6 @@
                         <td>{{ $tarefa->data_inicio ? \Carbon\Carbon::parse($tarefa->data_inicio)->format('d/m/Y') : 'N/A' }}</td>
                         <td>{{ $tarefa->data_termino ? \Carbon\Carbon::parse($tarefa->data_termino)->format('d/m/Y') : 'N/A' }}</td>
                         <td>{{ $tarefa->projeto->titulo ?? 'N/A' }}</td>
-                        <!-- Exibe o status da tarefa -->
                         <td>
                             @if ($tarefa->status == 'pendente')
                                 <span class="badge bg-warning">Pendente</span>

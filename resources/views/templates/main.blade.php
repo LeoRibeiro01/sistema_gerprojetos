@@ -124,7 +124,7 @@
                                 @csrf
                             </form>
                         </li>
-                        <!-- Botão para PERFIL -->
+                        <!-- Botão para Perfil -->
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('profile.edit') }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-gear" viewBox="0 0 16 16">

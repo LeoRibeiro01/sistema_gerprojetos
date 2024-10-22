@@ -59,3 +59,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Rotas de Relatório
+Route::get('projetos/report', [ProjetoController::class, 'report'])->name('projetos.report');
+Route::get('projeto/report/{id}', [ProjetoController::class, 'singleReport'])->name('projeto.singleReport');
+Route::get('reports', [ReportController::class, 'index'])->name('reports.index'); // Lista todos os relatórios
+Route::get('reports/{id}', [ReportController::class, 'show'])->name('reports.show'); // Detalhes de um relatório específico

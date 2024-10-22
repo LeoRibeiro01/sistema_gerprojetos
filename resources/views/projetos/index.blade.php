@@ -118,7 +118,6 @@
             <!-- Imagem de voltar dentro da marca da navbar -->
             <a href="{{ route('home') }}" class="navbar-brand">
                 <img src="https://infotech-solucoes.com/novo/public/img/logo_infotech.png" alt="Voltar para a home">
-                
             </a>
         </div>
     </nav>
@@ -153,9 +152,10 @@
             </div>
         </form>
 
-        <!-- Botão para criar novo projeto -->
+        <!-- Botões para criar novo projeto e visualizar relatório PDF -->
         <div class="d-flex justify-content-between align-items-center mb-3">
             <a href="{{ route('projeto.create') }}" class="btn btn-success btn-custom">Novo Projeto</a>
+            <a href="{{ route('projetos.report') }}" class="btn btn-danger btn-custom">Visualizar PDF Geral</a>
         </div>
 
         <!-- Tabela de Projetos -->
@@ -192,7 +192,7 @@
                             @endif
                         </td>
                         <td class="actions-btns">
-                            <a href="{{ route('projeto.show', $projeto->id) }}" class="btn btn-info btn-sm btn-custom">Ver</a>
+                            <a href="{{ route('projeto.singleReport', $projeto->id) }}" class="btn btn-info btn-sm btn-custom">Pdf</a>
                             <a href="{{ route('projeto.edit', $projeto->id) }}" class="btn btn-warning btn-sm btn-custom">Editar</a>
                             <form action="{{ route('projeto.destroy', $projeto->id) }}" method="POST" style="display:inline;">
                                 @csrf

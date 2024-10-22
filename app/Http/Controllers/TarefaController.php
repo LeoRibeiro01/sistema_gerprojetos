@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tarefa;
 use App\Models\Projeto;
+use Dompdf\Dompdf; // Importa a classe Dompdf
+use Dompdf\Options; // Importa a classe Options
 
 class TarefaController extends Controller
 {
@@ -131,4 +133,48 @@ class TarefaController extends Controller
         $tarefa->delete();
         return redirect()->route('tarefas.index')->with('success', 'Tarefa excluída com sucesso.');
     }
+
+    public function report()
+{
+    // Obtém todas as tarefas com as relações necessárias
+    $tarefas = Tarefa::with(['projeto', 'responsavel'])->get(); // Ajuste as relações conforme seu modelo
+
+    // Configura o Dompdf
+    $options = new Options();
+    $options->set('defaultFont', 'DejaVu Sans');
+    $dompdf = new Dompdf($options);
+
+    // Gera a view para o PDF
+    $pdfView = view('tarefa.report', compact('tarefas')); // A view deve ser criada para o relatório
+
+    // Carrega a view no Dompdf
+    $dompdf->loadHtml($pdfView);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+
+    // Exibe o PDF no navegador
+    return $dompdf->stream('relatorio_tarefas.pdf', ["Attachment" => false]);
+}
+
+public function singleReport($id)
+{
+    // Obtém a tarefa específica com as relações necessárias
+    $tarefa = Tarefa::with(['projeto', 'responsavel'])->findOrFail($id); // Ajuste as relações conforme seu modelo
+
+    // Configura o Dompdf
+    $options = new Options();
+    $options->set('defaultFont', 'DejaVu Sans');
+    $dompdf = new Dompdf($options);
+
+    // Gera a view para o PDF
+    $pdfView = view('tarefa.singleReport', compact('tarefa')); // A view deve ser criada para o relatório específico
+
+    // Carrega a view no Dompdf
+    $dompdf->loadHtml($pdfView);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+
+    // Exibe o PDF no navegador
+    return $dompdf->stream('relatorio_tarefa_'.$tarefa->id.'.pdf', ["Attachment" => false]);
+}
 }

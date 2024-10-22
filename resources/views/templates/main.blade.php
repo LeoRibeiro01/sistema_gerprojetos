@@ -54,10 +54,7 @@
             max-width: 1200px;
         }
         .contact-info {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin-top: 50px; /* Define a margem superior para afastar o conteúdo do meio da página */
             text-align: center;
             background-color: rgba(255, 255, 255, 0.8); /* Fundo semi-transparente */
             padding: 20px;
@@ -78,6 +75,28 @@
             <a class="navbar-brand" href="{{ route('home') }}">
                 <img src="https://infotech-solucoes.com/novo/public/img/logo_infotech.png" alt="Infotech Logo">
             </a>
+            <!-- Adicionando ícone do Instagram -->
+            <a class="nav-link" href="https://www.instagram.com/infotech.solucoes2/" target="_blank" style="margin-right: 20px;" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-instagram" viewBox="0 0 16 16">
+                    <path d="M8 0C5.94 0 5.668.01 4.605.048 3.543.086 2.663.322 1.947.902c-.716.579-1.134 1.387-1.398 2.35C.02 4.332 0 4.67 0 8s.02 3.668.548 4.748c.264.963.682 1.771 1.398 2.35.716.579 1.596.816 2.658.854C5.668 15.99 5.94 16 8 16s2.332-.01 3.395-.048c1.062-.038 1.942-.275 2.658-.854.716-.579 1.134-1.387 1.398-2.35C15.98 11.668 16 11.33 16 8s-.02-3.668-.548-4.748c-.264-.963-.682-1.771-1.398-2.35-.716-.58-1.596-.816-2.658-.854C10.332.01 10.06 0 8 0zM8 1.531c2.052 0 2.29.008 3.093.045.772.035 1.19.162 1.468.271.368.144.631.316.907.592.275.276.448.54.592.907.109.278.236.696.271 1.468.037.803.045 1.041.045 3.093s-.008 2.29-.045 3.093c-.035.772-.162 1.19-.271 1.468a2.278 2.278 0 0 1-.592.907c-.276.275-.54.448-.907.592-.278.109-.696.236-1.468.271-.803.037-1.041.045-3.093.045s-2.29-.008-3.093-.045c-.772-.035-1.19-.162-1.468-.271a2.278 2.278 0 0 1-.907-.592c-.276-.275-.448-.54-.592-.907-.109-.278-.236-.696-.271-1.468-.037-.803-.045-1.041-.045-3.093s.008-2.29.045-3.093c.035-.772.162-1.19.271-1.468.144-.368.316-.631.592-.907.276-.276.54-.448.907-.592.278-.109.696-.236 1.468-.271.803-.037 1.041-.045 3.093-.045zm0 2.35a4.119 4.119 0 1 0 0 8.237 4.119 4.119 0 0 0 0-8.237zm0 6.807a2.688 2.688 0 1 1 0-5.375 2.688 2.688 0 0 1 0 5.375zm4.953-6.873a.96.96 0 1 1-1.922 0 .96.96 0 0 1 1.922 0z"/>
+                </svg>
+            </a>
+
+            <!-- Adicionando ícone do Facebook -->
+            <a class="nav-link" href="https://www.facebook.com/infotechinfo/?locale=pt_BR" target="_blank" style="margin-right: 20px;" style="margin-left: 10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-facebook" viewBox="0 0 16 16">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 4.02 2.98 7.32 6.84 7.94V10.44H5.07V8h1.77V6.36c0-1.74 1.07-2.69 2.62-2.69.75 0 1.39.06 1.58.08v1.84h-1.09c-.85 0-1.02.4-1.02.99V8h2.04l-.27 2.44H8.95v5.5C12.82 15.32 16 12.02 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+            </a>
+
+            <!-- Adicionando ícone do Whatsapp -->
+            <a class="nav-link" href="https://api.whatsapp.com/send/?phone=5541998277342&text&type=phone_number&app_absent=0" target="_blank" style="margin-right: 20px;" style="margin-left: 10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-whatsapp" viewBox="0 0 16 16">
+            <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+            </svg>
+            </a>
+
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -105,14 +124,6 @@
                                 @csrf
                             </form>
                         </li>
-                        <!-- Botão para PERFIL -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('profile.edit') }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-gear" viewBox="0 0 16 16">
-                                  <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
-                                </svg> Perfil
-                            </a>
-                        </li>
                     @endauth
                 </ul>
             </div>
@@ -122,15 +133,10 @@
     <!-- Hero Section -->
     <div class="hero-section">
         <div class="container">
-            <h1>Sistema de Gerenciamento de Projetos</h1>
-            <p>Gerencie seus projetos e tarefas com eficiência.</p>
-            <a href="{{ route('projeto.index') }}" class="btn btn-primary btn-lg">Ver Projetos</a>
+            <h1>Gerencie seus projetos com eficiência</h1>
+            <p>Organize, planeje e acompanhe o progresso dos seus projetos em uma única plataforma.</p>
+            <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Comece Agora</a>
         </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="container">
-        @yield('content')
     </div>
 
     <!-- Contact Info -->
@@ -140,6 +146,6 @@
         <p>Endereço: R. Arthur Bernardes, 453 - Alvorada, Paranaguá - PR, 83206-110</p>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-NMw3Z1gxRnZGH/WxqABZd+TWtJjhnHX1LpIXcfD1I4V4W/EYtq0J6p/5WV+fjEOf" crossorigin="anonymous"></script>
 </body>
 </html>

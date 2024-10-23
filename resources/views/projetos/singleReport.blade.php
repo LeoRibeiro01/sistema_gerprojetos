@@ -133,7 +133,7 @@
 
     <!-- Rodapé do Relatório -->
     <footer>
-        Relatório gerado por InfoTech Soluções - {{ \Carbon\Carbon::now()->format('d/m/Y') }}
+        Relatório gerado por InfoTech Soluções em tecnologia - {{ \Carbon\Carbon::now()->format('d/m/Y') }}
     </footer>
 </body>
 </html>

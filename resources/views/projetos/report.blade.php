@@ -60,15 +60,21 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($projetos as $projeto)
+            @if($projetos->isEmpty())
                 <tr>
-                    <td>{{ $projeto->titulo }}</td>
-                    <td>{{ $projeto->user->name ?? 'N/A' }}</td>
-                    <td>{{ $projeto->descricao }}</td>
-                    <td>{{ $projeto->status }}</td>
-                    <td>{{ $projeto->created_at->format('d/m/Y') }}</td>
+                    <td colspan="5">Nenhum projeto encontrado com os filtros aplicados.</td>
                 </tr>
-            @endforeach
+            @else
+                @foreach($projetos as $projeto)
+                    <tr>
+                        <td>{{ $projeto->titulo }}</td>
+                        <td>{{ $projeto->user->name ?? 'N/A' }}</td>
+                        <td>{{ $projeto->descricao }}</td>
+                        <td>{{ $projeto->status }}</td>
+                        <td>{{ $projeto->created_at->format('d/m/Y') }}</td>
+                    </tr>
+                @endforeach
+            @endif
         </tbody>
     </table>
 
@@ -84,20 +90,26 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($tarefa as $tarefa)
+            @if($tarefas->isEmpty())
                 <tr>
-                    <td>{{ $tarefa->nome }}</td>
-                    <td>{{ $tarefa->projeto->nome }}</td>
-                    <td>{{ $tarefa->responsavel->nome ?? 'N/A' }}</td>
-                    <td>{{ $tarefa->status }}</td>
-                    <td>{{ $tarefa->created_at->format('d/m/Y') }}</td>
+                    <td colspan="5">Nenhuma tarefa encontrada com os filtros aplicados.</td>
                 </tr>
-            @endforeach
+            @else
+                @foreach($tarefas as $tarefa)
+                    <tr>
+                        <td>{{ $tarefa->nome }}</td>
+                        <td>{{ $tarefa->projeto->titulo }}</td>
+                        <td>{{ $tarefa->user->name ?? 'N/A' }}</td>
+                        <td>{{ $tarefa->status }}</td>
+                        <td>{{ $tarefa->created_at->format('d/m/Y') }}</td>
+                    </tr>
+                @endforeach
+            @endif
         </tbody>
     </table>
 
     <footer>
-        © {{ date('Y') }} - Relatório de Projetos e Tarefas
+        Relatório gerado por © InfoTech Soluções em tecnologia - {{ \Carbon\Carbon::now()->format('d/m/Y') }}
     </footer>
 </body>
 </html>

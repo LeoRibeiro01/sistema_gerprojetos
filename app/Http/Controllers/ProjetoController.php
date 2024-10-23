@@ -14,32 +14,33 @@ class ProjetoController extends Controller
     // Exibe uma lista de todos os projetos
     public function index(Request $request)
     {
-        $projeto = Projeto::query();
+        $projetos = Projeto::query();
 
-        // Filtro por título
-        if ($request->has('titulo') && $request->titulo != '') {
-            $projeto->where('titulo', 'like', '%' . $request->titulo . '%');
+        // Filtro por título (usando 'like' para pesquisa parcial)
+        if ($request->has('titulo') && !empty($request->titulo)) {
+            $projetos->where('titulo', 'like', '%' . $request->titulo . '%');
         }
 
         // Filtro por status
-        if ($request->has('status') && $request->status != '') {
-            $projeto->where('status', $request->status);
+        if ($request->has('status') && !empty($request->status)) {
+            $projetos->where('status', $request->status);
         }
 
-        // Filtro por data (data de início)
-        if ($request->has('data_inicio') && $request->data_inicio != '') {
-            $projeto->whereDate('data_inicio', '=', $request->data_inicio);
+        // Filtro por data de início (>= data_inicio)
+        if ($request->has('data_inicio') && !empty($request->data_inicio)) {
+            $projetos->whereDate('data_inicio', '>=', $request->data_inicio);
         }
 
-        // Filtro por data (data de término)
-        if ($request->has('data_termino') && $request->data_termino != '') {
-            $projeto->whereDate('data_termino', '=', $request->data_termino);
+        // Filtro por data de término (<= data_termino)
+        if ($request->has('data_termino') && !empty($request->data_termino)) {
+            $projetos->whereDate('data_termino', '<=', $request->data_termino);
         }
 
-        // Ordenar por ID ou outro critério (opcional)
-        $projeto = $projeto->get();
+        // Obter os projetos após os filtros
+        $projetos = $projetos->get();
 
-        return view('projetos.index', compact('projeto'));
+        // Retornar para a view 'projetos.index' com os resultados filtrados
+        return view('projetos.index', compact('projetos'));
     }
 
     // Mostra o formulário para criar um novo projeto
@@ -127,28 +128,67 @@ class ProjetoController extends Controller
         return redirect()->route('projeto.index');
     }
 
-    public function report()
+    public function report(Request $request)
     {
-        // Obtém todos os projetos e suas tarefas e usuários
-        $projetos = Projeto::with(['tarefas', 'user'])->get();
-        $tarefa = Tarefa::with(['projeto', 'user'])->get(); // Supondo que 'responsavel' seja a relação correta
-    
+        // Recebe os parâmetros de filtro do request
+        $titulo = $request->input('titulo');
+        $status = $request->input('status');
+        $dataInicio = $request->input('data_inicio');
+        $dataTermino = $request->input('data_termino');
+
+        // Faz a query considerando os filtros aplicados
+        $projetos = Projeto::with(['tarefas', 'user'])
+            ->when($titulo, function ($query, $titulo) {
+                return $query->where('titulo', 'like', '%' . $titulo . '%');
+            })
+            ->when($status, function ($query, $status) {
+                return $query->where('status', $status);
+            })
+            ->when($dataInicio, function ($query, $dataInicio) {
+                return $query->whereDate('created_at', '>=', $dataInicio);
+            })
+            ->when($dataTermino, function ($query, $dataTermino) {
+                return $query->whereDate('created_at', '<=', $dataTermino);
+            })
+            ->get();
+
+        // Tarefas relacionadas (ajuste conforme necessário)
+        $tarefas = Tarefa::with(['projeto', 'user'])
+            ->whereHas('projeto', function ($query) use ($titulo, $status, $dataInicio, $dataTermino) {
+                // Aplica os mesmos filtros para tarefas (se fizer sentido)
+                if ($titulo) {
+                    $query->where('titulo', 'like', '%' . $titulo . '%');
+                }
+                if ($status) {
+                    $query->where('status', $status);
+                }
+                if ($dataInicio) {
+                    $query->whereDate('created_at', '>=', $dataInicio);
+                }
+                if ($dataTermino) {
+                    $query->whereDate('created_at', '<=', $dataTermino);
+                }
+            })
+            ->get();
+
         // Configura o Dompdf
         $options = new Options();
         $options->set('defaultFont', 'DejaVu Sans');
         $dompdf = new Dompdf($options);
-    
-        // Gera a view para o PDF
-        $pdfView = view('projetos.report', compact('projetos', 'tarefa')); // Passando 'projetos' e 'tarefas'
-    
+
+        // Gera a view para o PDF com os dados filtrados
+        $pdfView = view('projetos.report', compact('projetos', 'tarefas'));
+
         // Carrega a view no Dompdf
         $dompdf->loadHtml($pdfView);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-    
+
         // Exibe o PDF no navegador
         return $dompdf->stream('relatorio_projetos.pdf', ["Attachment" => false]);
     }
+
+
     
     
 

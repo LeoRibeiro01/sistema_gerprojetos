@@ -152,10 +152,20 @@
             </div>
         </form>
 
+         <!-- Formulário de PDF com base no filtro -->
+         <form action="{{ route('projetos.report') }}" method="GET" target="_blank">
+            <input type="hidden" name="titulo" value="{{ request('titulo') }}">
+            <input type="hidden" name="status" value="{{ request('status') }}">
+            <input type="hidden" name="data_inicio" value="{{ request('data_inicio') }}">
+            <input type="hidden" name="data_termino" value="{{ request('data_termino') }}">
+        </form>
+
         <!-- Botões para criar novo projeto e visualizar relatório PDF -->
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <a href="{{ route('projeto.create') }}" class="btn btn-success btn-custom">Novo Projeto</a>
-            <a href="{{ route('projetos.report') }}" class="btn btn-danger btn-custom">Visualizar PDF Geral</a>
+            <div>
+                <a href="{{ route('projeto.create') }}" class="btn btn-success btn-custom me-2">Novo Projeto</a>
+                <button type="submit" class="btn btn-danger btn-custom">Ver PDF Geral</button>
+            </div>
         </div>
 
         <!-- Tabela de Projetos -->
@@ -174,7 +184,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($projeto as $projeto)
+                    @foreach ($projetos as $projeto)
                     <tr>
                         <td>{{ $projeto->id }}</td>
                         <td>{{ $projeto->titulo }}</td>
@@ -199,6 +209,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm btn-custom">Excluir</button>
                             </form>
+
                         </td>
                     </tr>
                     @endforeach

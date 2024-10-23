@@ -160,7 +160,7 @@
             <input type="hidden" name="data_termino" value="{{ request('data_termino') }}">
         </form>
 
-        <!-- Botões para criar novo projeto e visualizar relatório PDF -->
+        <!-- Botões para criar um novo projeto e visualizar relatório PDF -->
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
                 <a href="{{ route('projeto.create') }}" class="btn btn-success btn-custom me-2">Novo Projeto</a>

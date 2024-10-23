@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Projeto;
+use App\Models\Tarefa;
 use App\Models\User; // Importando o modelo User
 use Dompdf\Dompdf; // Importa a classe Dompdf
 use Dompdf\Options; // Importa a classe Options
@@ -130,7 +131,7 @@ class ProjetoController extends Controller
     {
         // Obtém todos os projetos e suas tarefas e usuários
         $projetos = Projeto::with(['tarefas', 'user'])->get();
-        $tarefas = Tarefa::with(['projeto', 'responsavel'])->get(); // Supondo que 'responsavel' seja a relação correta
+        $tarefa = Tarefa::with(['projeto', 'user'])->get(); // Supondo que 'responsavel' seja a relação correta
     
         // Configura o Dompdf
         $options = new Options();
@@ -138,7 +139,7 @@ class ProjetoController extends Controller
         $dompdf = new Dompdf($options);
     
         // Gera a view para o PDF
-        $pdfView = view('projetos.report', compact('projetos', 'tarefas')); // Passando 'projetos' e 'tarefas'
+        $pdfView = view('projetos.report', compact('projetos', 'tarefa')); // Passando 'projetos' e 'tarefas'
     
         // Carrega a view no Dompdf
         $dompdf->loadHtml($pdfView);

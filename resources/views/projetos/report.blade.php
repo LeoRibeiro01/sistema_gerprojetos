@@ -62,7 +62,7 @@
         <tbody>
             @foreach($projetos as $projeto)
                 <tr>
-                    <td>{{ $projeto->nome }}</td>
+                    <td>{{ $projeto->titulo }}</td>
                     <td>{{ $projeto->user->name ?? 'N/A' }}</td>
                     <td>{{ $projeto->descricao }}</td>
                     <td>{{ $projeto->status }}</td>
@@ -84,7 +84,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($tarefas as $tarefa)
+            @foreach($tarefa as $tarefa)
                 <tr>
                     <td>{{ $tarefa->nome }}</td>
                     <td>{{ $tarefa->projeto->nome }}</td>

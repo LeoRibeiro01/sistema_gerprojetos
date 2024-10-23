@@ -56,6 +56,8 @@
                 <th>Cliente</th>
                 <th>Descrição</th>
                 <th>Status</th>
+                <th>Data de inicio</th>
+                <th>Data de término</th>
                 <th>Data de Criação</th>
             </tr>
         </thead>
@@ -71,6 +73,8 @@
                         <td>{{ $projeto->user->name ?? 'N/A' }}</td>
                         <td>{{ $projeto->descricao }}</td>
                         <td>{{ $projeto->status }}</td>
+                        <td>{{ $projeto->data_inicio }}</td>
+                        <td>{{ $projeto->data_termino }}</td>
                         <td>{{ $projeto->created_at->format('d/m/Y') }}</td>
                     </tr>
                 @endforeach

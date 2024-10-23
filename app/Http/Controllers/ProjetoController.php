@@ -145,10 +145,10 @@ class ProjetoController extends Controller
                 return $query->where('status', $status);
             })
             ->when($dataInicio, function ($query, $dataInicio) {
-                return $query->whereDate('created_at', '>=', $dataInicio);
+                return $query->where('data_inicio', $dataInicio);
             })
             ->when($dataTermino, function ($query, $dataTermino) {
-                return $query->whereDate('created_at', '<=', $dataTermino);
+                return $query->where('data_termino', $dataTermino);
             })
             ->get();
 

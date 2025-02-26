@@ -1,12 +1,8 @@
-aqui está uma sugestão de descrição mais organizada e profissional para o seu projeto no github:  
-
----  
-
 # **Sistema de Gerenciamento de Projetos e Tarefas**  
 
-um sistema simples de gerenciamento de projetos e tarefas, desenvolvido com **laravel** e **blade**. o projeto ainda está em desenvolvimento e possui alguns erros, além da falta de cadastro e login, que não foram implementados por questão de tempo.  
+um sistema simples de gerenciamento de projetos e tarefas, desenvolvido com **laravel** e **blade**. o projeto ainda está em desenvolvimento e possui alguns erros
 
-## 🚀 **como testar o projeto**  
+## 🚀 **testar o projeto**  
 1. clone o repositório:  
    ```bash
    git clone <url-do-repositorio>
@@ -18,21 +14,17 @@ um sistema simples de gerenciamento de projetos e tarefas, desenvolvido com **la
    ```  
 3. configure o banco de dados no `.env` (por padrão, o nome é `sistema_projetos`).  
 4. instale as dependências:  
-   ```bash
+   ```
    composer install
    ```  
 5. gere a chave da aplicação:  
-   ```bash
+   ```
    php artisan key:generate
    ```  
 6. inicie o servidor:  
-   ```bash
+   ```
    php artisan serve
-   ```  
-
----  
-
-o que acha? se quiser destacar alguma funcionalidade específica ou deixar mais descontraído, posso ajustar! 🚀
+   ```
 
 
 

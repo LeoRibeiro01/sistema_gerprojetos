@@ -147,6 +147,8 @@
         </div>
     </div>
 
+    @yield('content')
+
     <!-- Contact Info -->
     <div class="contact-info">
         <p>Contato: (41) 3422-2717</p>

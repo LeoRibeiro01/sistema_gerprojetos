@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use App\Enums\UserRole;
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+
+class CheckClient
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        if (Auth::check() && Auth::user()->hasRole(UserRole::Client)) {
+            return $next($request);
+        }
+
+        return redirect()
+            ->route('dashboard')
+            ->with('error', 'Acesso restrito ao portal do cliente.');
+    }
+}

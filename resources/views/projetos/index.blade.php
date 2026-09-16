@@ -1,225 +1,73 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Lista de Projetos</title>
-    <style>
-        body {
-            background-color: #f8f9fa; /* Cor de fundo suave */
-            font-family: 'Arial', sans-serif;
-        }
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Projetos</h2>
+    </x-slot>
 
-        h1 {
-            color: #343a40; /* Cor do título */
-            font-weight: 600;
-            margin-bottom: 30px;
-        }
-
-        .table thead th {
-            background-color: #e9ecef; /* Cabeçalho da tabela em cinza claro */
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .table th, .table td {
-            vertical-align: middle; /* Centraliza o texto nas células */
-            text-align: center;
-        }
-
-        .badge-warning {
-            background-color: #f0ad4e;
-        }
-
-        .badge-danger {
-            background-color: #d9534f;
-        }
-
-        .badge-success {
-            background-color: #5bc0de;
-        }
-
-        .btn-custom {
-            border-radius: 20px;
-            padding: 8px 16px;
-            font-size: 14px;
-        }
-
-        .table-responsive {
-            margin-top: 20px;
-        }
-
-        .form-control, .btn {
-            border-radius: 20px;
-        }
-
-        .filter-form .row {
-            margin-bottom: 15px;
-        }
-
-        .filter-form .btn {
-            border-radius: 20px;
-            padding: 8px 16px;
-            font-size: 14px;
-        }
-
-        .actions-btns a {
-            margin-right: 5px;
-        }
-
-        /* Estilo da Navbar */
-        .navbar {
-            background-color: #001f3f; /* Azul marinho */
-            padding: 0.3% 2rem;
-        }
-
-        .navbar-brand {
-            font-size: 1.5rem;
-            color: white;
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar-brand img {
-            width: 107px;
-            height: 60px;
-            margin-right: 20px;
-        }
-
-        .navbar .nav-link {
-            color: white;
-        }
-
-        .navbar .nav-link:hover {
-            color: #f8f9fa;
-        }
-
-        /* Botão de voltar */
-        .btn-back {
-            background-color: #001f3f; /* Mesma cor da navbar */
-            padding: 30px;
-            border: none;
-        }
-
-        .btn-back img {
-            width: 30px;
-            height: 30px;
-        }
-
-        .btn-back:hover {
-            background-color: #004085; /* Azul mais escuro */
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <!-- Imagem de voltar dentro da marca da navbar -->
-            <a href="{{ route('home') }}" class="navbar-brand">
-                <img src="https://infotech-solucoes.com/novo/public/img/logo_infotech.png" alt="Voltar para a home">
-            </a>
-        </div>
-    </nav>
-
-    <div class="container mt-4">
-    
-    <h1 class="mb-4">Lista de Projetos</h1>
-            
-        <!-- Formulário de filtro -->
-        <form method="GET" action="{{ route('projeto.index') }}" class="filter-form mb-4">
-            <div class="row">
-                <div class="col-md-3">
-                    <input type="text" name="titulo" class="form-control" placeholder="Filtrar por título" value="{{ request('titulo') }}">
-                </div>
-                <div class="col-md-2">
-                    <select name="status" class="form-control">
-                        <option value="">Filtrar por status</option>
-                        <option value="pendente" {{ request('status') == 'pendente' ? 'selected' : '' }}>Pendente</option>
-                        <option value="atrasado" {{ request('status') == 'atrasado' ? 'selected' : '' }}>Atrasado</option>
-                        <option value="concluido" {{ request('status') == 'concluido' ? 'selected' : '' }}>Concluído</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <input type="date" name="data_inicio" class="form-control" placeholder="Data de início" value="{{ request('data_inicio') }}">
-                </div>
-                <div class="col-md-2">
-                    <input type="date" name="data_termino" class="form-control" placeholder="Data de término" value="{{ request('data_termino') }}">
-                </div>
-                <div class="col-md-3 text-center">
-                    <button type="submit" class="btn btn-primary btn-custom">Filtrar</button>
-                </div>
-            </div>
-        </form>
-
-        
-
-       <!-- Botões para criar novo projeto e visualizar relatório PDF -->
-        
-        <div class="d-flex justify-content-start align-items-center mb-3">
-            <a href="{{ route('projeto.create') }}" class="btn btn-success btn-custom me-2">Novo Projeto</a>
-            <!-- Formulário de PDF com base no filtro -->
-            <form action="{{ route('projetos.report') }}" method="GET" target="_blank" class="mb-0">
-                <input type="hidden" name="titulo" value="{{ request('titulo') }}">
-                <input type="hidden" name="status" value="{{ request('status') }}">
-                <input type="hidden" name="data_inicio" value="{{ request('data_inicio') }}">
-                <input type="hidden" name="data_termino" value="{{ request('data_termino') }}">
-                <button type="submit" class="btn btn-danger btn-custom">Ver PDF Geral</button>
-            </form>
-        </div>
-
-
-
-        <!-- Tabela de Projetos -->
-        <div class="table-responsive">
-            <table class="table table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Título</th>
-                        <th>Descrição</th>
-                        <th>Data Início</th>
-                        <th>Data Término</th>
-                        <th>Cliente</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($projetos as $projeto)
-                    <tr>
-                        <td>{{ $projeto->id }}</td>
-                        <td>{{ $projeto->titulo }}</td>
-                        <td>{{ Str::limit($projeto->descricao, 50) }}</td>
-                        <td>{{ $projeto->data_inicio ? \Carbon\Carbon::parse($projeto->data_inicio)->format('d/m/Y') : 'N/A' }}</td>
-                        <td>{{ $projeto->data_termino ? \Carbon\Carbon::parse($projeto->data_termino)->format('d/m/Y') : 'N/A' }}</td>
-                        <td>{{ $projeto->user->name ?? 'N/A' }}</td>
-                        <td>
-                            @if ($projeto->status == 'pendente')
-                                <span class="badge bg-warning">Pendente</span>
-                            @elseif ($projeto->status == 'atrasado')
-                                <span class="badge bg-danger">Atrasado</span>
-                            @else
-                                <span class="badge bg-success">Concluído</span>
-                            @endif
-                        </td>
-                        <td class="actions-btns">
-                            <a href="{{ route('projeto.singleReport', $projeto->id) }}" class="btn btn-info btn-sm btn-custom">Pdf</a>
-                            <a href="{{ route('projeto.edit', $projeto->id) }}" class="btn btn-warning btn-sm btn-custom">Editar</a>
-                            <form action="{{ route('projeto.destroy', $projeto->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm btn-custom">Excluir</button>
-                            </form>
-
-                        </td>
-                    </tr>
+    <div class="py-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
+            <form method="GET" action="{{ route('projeto.index') }}" class="grid grid-cols-1 md:grid-cols-5 gap-3 bg-white p-4 rounded-lg shadow-sm">
+                <input type="text" name="titulo" placeholder="Título" value="{{ request('titulo') }}" class="rounded-md border-gray-300 shadow-sm text-sm">
+                <select name="status" class="rounded-md border-gray-300 shadow-sm text-sm">
+                    <option value="">Status</option>
+                    @foreach (['pendente', 'atrasado', 'concluido'] as $status)
+                        <option value="{{ $status }}" @selected(request('status') === $status)>{{ ucfirst($status) }}</option>
                     @endforeach
-                </tbody>
-            </table>
+                </select>
+                <input type="date" name="data_inicio" value="{{ request('data_inicio') }}" class="rounded-md border-gray-300 shadow-sm text-sm">
+                <input type="date" name="data_termino" value="{{ request('data_termino') }}" class="rounded-md border-gray-300 shadow-sm text-sm">
+                <button type="submit" class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500">Filtrar</button>
+            </form>
+
+            <div class="flex flex-wrap gap-2">
+                @can('create', App\Models\Projeto::class)
+                    <a href="{{ route('projeto.create') }}" class="rounded-md bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-500">Novo projeto</a>
+                @endcan
+                <form action="{{ route('projetos.report') }}" method="GET" target="_blank" class="inline-flex flex-wrap gap-2">
+                    <input type="hidden" name="titulo" value="{{ request('titulo') }}">
+                    <input type="hidden" name="status" value="{{ request('status') }}">
+                    <input type="hidden" name="data_inicio" value="{{ request('data_inicio') }}">
+                    <input type="hidden" name="data_termino" value="{{ request('data_termino') }}">
+                    <button type="submit" class="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-500">PDF geral</button>
+                </form>
+            </div>
+
+            <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-sm">
+                <table class="min-w-full divide-y divide-gray-200 text-sm">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-3 py-2 text-left">ID</th>
+                            <th class="px-3 py-2 text-left">Título</th>
+                            <th class="px-3 py-2 text-left">Responsável</th>
+                            <th class="px-3 py-2 text-left">Status</th>
+                            <th class="px-3 py-2 text-right">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @foreach ($projetos as $projeto)
+                            <tr>
+                                <td class="px-3 py-2">{{ $projeto->id }}</td>
+                                <td class="px-3 py-2">{{ $projeto->titulo }}</td>
+                                <td class="px-3 py-2">{{ $projeto->user->name ?? 'N/A' }}</td>
+                                <td class="px-3 py-2 capitalize">{{ $projeto->status }}</td>
+                                <td class="px-3 py-2 text-right space-x-2 whitespace-nowrap">
+                                    <a href="{{ route('projeto.show', $projeto) }}" class="text-indigo-600 hover:underline">Ver</a>
+                                    @can('update', $projeto)
+                                        <a href="{{ route('projeto.edit', $projeto) }}" class="text-amber-600 hover:underline">Editar</a>
+                                    @endcan
+                                    <a href="{{ route('projeto.singleReport', $projeto) }}" target="_blank" class="text-red-600 hover:underline">PDF</a>
+                                    @can('delete', $projeto)
+                                        <form action="{{ route('projeto.destroy', $projeto) }}" method="POST" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-700 hover:underline" onclick="return confirm('Excluir projeto?')">Excluir</button>
+                                        </form>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</x-app-layout>

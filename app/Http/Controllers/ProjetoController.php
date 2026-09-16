@@ -11,9 +11,10 @@ use Dompdf\Options; // Importa a classe Options
 
 class ProjetoController extends Controller
 {
-    // Exibe uma lista de todos os projetos
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Projeto::class);
+
         $projetos = Projeto::query();
 
         // Filtro por título (usando 'like' para pesquisa parcial)
@@ -46,13 +47,18 @@ class ProjetoController extends Controller
     // Mostra o formulário para criar um novo projeto
     public function create()
     {
-        $users = User::where('is_admin', false)->orderBy('name')->get(); // Busca usuários não administradores ordenados
-        return view('projetos.create', compact('users')); // Passa 'users' para a view
+        $this->authorize('create', Projeto::class);
+
+        $users = User::whereIn('role', ['dev', 'pm', 'manager', 'scrum_master'])->orderBy('name')->get();
+
+        return view('projetos.create', compact('users'));
     }
 
     // Armazena um novo projeto no banco de dados
     public function store(Request $request)
     {
+        $this->authorize('create', Projeto::class);
+
         $request->validate([
             'titulo' => 'required|string|max:255',
             'descricao' => 'nullable|string',
@@ -76,19 +82,26 @@ class ProjetoController extends Controller
     // Exibe os detalhes de um projeto específico
     public function show(Projeto $projeto)
     {
+        $this->authorize('view', $projeto);
+
         return view('projetos.show', compact('projeto'));
     }
 
     // Mostra o formulário para editar um projeto existente
     public function edit(Projeto $projeto)
     {
-        $users = User::where('is_admin', false)->orderBy('name')->get(); // Busca usuários não administradores
-        return view('projetos.edit', compact('projeto', 'users')); // Passa 'users' para a view
+        $this->authorize('update', $projeto);
+
+        $users = User::whereIn('role', ['dev', 'pm', 'manager', 'scrum_master'])->orderBy('name')->get();
+
+        return view('projetos.edit', compact('projeto', 'users'));
     }
 
     // Atualiza um projeto existente no banco de dados
     public function update(Request $request, Projeto $projeto)
     {
+        $this->authorize('update', $projeto);
+
         $request->validate([
             'titulo' => 'required|string|max:255',
             'descricao' => 'nullable|string',
@@ -113,6 +126,7 @@ class ProjetoController extends Controller
     public function concluir($id)
     {
         $projeto = Projeto::findOrFail($id);
+        $this->authorize('update', $projeto);
 
         // Alterna o status entre "concluída" e "pendente"
         $projeto->status = $projeto->status == 'concluido' ? 'pendente' : 'concluido';
@@ -124,12 +138,16 @@ class ProjetoController extends Controller
     // Remove um projeto do banco de dados
     public function destroy(Projeto $projeto)
     {
+        $this->authorize('delete', $projeto);
+
         $projeto->delete();
         return redirect()->route('projeto.index');
     }
 
     public function report(Request $request)
     {
+        $this->authorize('viewAny', Projeto::class);
+
         // Recebe os parâmetros de filtro do request
         $titulo = $request->input('titulo');
         $status = $request->input('status');
@@ -194,8 +212,8 @@ class ProjetoController extends Controller
 
     public function singleReport($id)
     {
-        // Obtém o projeto específico com as relações necessárias
-        $projeto = Projeto::with(['tarefas', 'user'])->findOrFail($id); // Ajuste as relações conforme seu modelo
+        $projeto = Projeto::with(['tarefas', 'user'])->findOrFail($id);
+        $this->authorize('view', $projeto);
 
         // Configura o Dompdf
         $options = new \Dompdf\Options();

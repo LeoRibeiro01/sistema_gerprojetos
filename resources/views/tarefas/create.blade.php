@@ -1,68 +1,71 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Criar Tarefa</title>
-</head>
-<body>
-    <div class="container mt-4">
-        <h1>Criar Nova Tarefa</h1>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Nova tarefa</h2>
+    </x-slot>
 
-        <!-- Verifica se o usuário tem permissão para criar tarefas -->
-        @if (auth()->check() && auth()->user()->isAdmin())
-            <form action="{{ route('tarefas.store') }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label for="titulo" class="form-label">Título</label>
-                    <input type="text" class="form-control @error('titulo') is-invalid @enderror" id="titulo" name="titulo" value="{{ old('titulo') }}" required>
-                    @error('titulo')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="descricao" class="form-label">Descrição</label>
-                    <textarea class="form-control @error('descricao') is-invalid @enderror" id="descricao" name="descricao">{{ old('descricao') }}</textarea>
-                    @error('descricao')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="data_inicio" class="form-label">Data de Início</label>
-                    <input type="date" class="form-control @error('data_inicio') is-invalid @enderror" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') }}" required>
-                    @error('data_inicio')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="data_termino" class="form-label">Data de Término</label>
-                    <input type="date" class="form-control @error('data_termino') is-invalid @enderror" id="data_termino" name="data_termino" value="{{ old('data_termino') }}">
-                    @error('data_termino')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="projeto_id" class="form-label">Projeto</label>
-                    <select class="form-select @error('projeto_id') is-invalid @enderror" id="projeto_id" name="projeto_id" required>
-                        <option value="">Selecione o Projeto</option>
-                        @foreach ($projetos as $projeto)
-                            <option value="{{ $projeto->id }}" {{ old('projeto_id') == $projeto->id ? 'selected' : '' }}>{{ $projeto->titulo }}</option>
+    <div class="py-8 max-w-xl mx-auto sm:px-6 lg:px-8">
+        <form method="POST" action="{{ route('tarefas.store') }}" class="bg-white p-6 rounded-lg shadow-sm space-y-4">
+            @csrf
+            <div>
+                <x-input-label for="titulo" value="Título" />
+                <x-text-input id="titulo" name="titulo" class="block mt-1 w-full" required />
+            </div>
+            <div>
+                <x-input-label for="descricao" value="Descrição" />
+                <textarea id="descricao" name="descricao" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" rows="3"></textarea>
+            </div>
+            <div>
+                <x-input-label for="data_inicio" value="Data início" />
+                <x-text-input id="data_inicio" type="date" name="data_inicio" class="block mt-1 w-full" required />
+            </div>
+            <div>
+                <x-input-label for="data_termino" value="Data término" />
+                <x-text-input id="data_termino" type="date" name="data_termino" class="block mt-1 w-full" />
+            </div>
+            <div>
+                <x-input-label for="projeto_id" value="Projeto" />
+                <select id="projeto_id" name="projeto_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                    @foreach ($projetos as $projeto)
+                        <option value="{{ $projeto->id }}">{{ $projeto->titulo }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                    <x-input-label for="tipo" value="Tipo" />
+                    <select id="tipo" name="tipo" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                        @foreach (App\Models\Tarefa::TIPOS as $tipo)
+                            <option value="{{ $tipo }}">{{ ucfirst(str_replace('_', ' ', $tipo)) }}</option>
                         @endforeach
                     </select>
-                    @error('projeto_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
                 </div>
-                <button type="submit" class="btn btn-primary">Salvar</button>
-            </form>
-            @else
-            <div class="alert alert-danger" role="alert">
-                Você não tem permissão para criar uma tarefa.
+                <div>
+                    <x-input-label for="prioridade" value="Prioridade" />
+                    <select id="prioridade" name="prioridade" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                        @foreach (App\Models\Tarefa::PRIORIDADES as $prioridade)
+                            <option value="{{ $prioridade }}">{{ ucfirst($prioridade) }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
-            <a href="{{ route('home') }}" class="btn btn-secondary">Voltar à Página Principal</a>
-        @endif
+            <div>
+                <x-input-label for="estimativa_minutos" value="Estimativa (minutos)" />
+                <x-text-input id="estimativa_minutos" type="number" min="1" name="estimativa_minutos" class="block mt-1 w-full" placeholder="Ex.: 240" />
+            </div>
+            <div>
+                <x-input-label for="sprint_id" value="Sprint" />
+                <select id="sprint_id" name="sprint_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                    <option value="">Sem sprint</option>
+                    @foreach ($sprints as $sprint)
+                        <option value="{{ $sprint->id }}">{{ $sprint->nome }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <x-input-label for="tag" value="Tag" />
+                <x-text-input id="tag" name="tag" class="block mt-1 w-full" placeholder="Ex.: mobile" />
+            </div>
+            <x-primary-button>Salvar</x-primary-button>
+        </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</x-app-layout>

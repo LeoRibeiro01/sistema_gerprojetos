@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -30,10 +33,14 @@ class AuthenticatedSessionController extends Controller
             'password' => 'required|string',
         ]);
 
+        if (Schema::hasTable('users') && User::count() === 0) {
+            Artisan::call('db:seed', ['--force' => true]);
+        }
+
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
 
-            return redirect()->route('home'); // Redireciona para a página principal
+            return redirect(RouteServiceProvider::HOME);
         }
 
         return back()->withErrors([

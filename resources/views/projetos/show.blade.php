@@ -1,54 +1,32 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Detalhes do Projeto</title>
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            background-color: #fff;
-            border-radius: 0.5rem;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-        }
-        h1, h3 {
-            color: #343a40;
-        }
-    </style>
-</head>
-<body>
-    <div class="container mt-4">
-        <h1 class="mb-4">Detalhes do Projeto</h1>
-        <dl class="row">
-            <dt class="col-sm-3">Título:</dt>
-            <dd class="col-sm-9">{{ $projeto->titulo }}</dd>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $projeto->titulo }}</h2>
+    </x-slot>
 
-            <dt class="col-sm-3">Descrição:</dt>
-            <dd class="col-sm-9">{{ $projeto->descricao }}</dd>
-
-            <dt class="col-sm-3">Cliente:</dt>
-            <dd class="col-sm-9">{{ $projeto->user->name }}</dd>
+    <div class="py-8 max-w-3xl mx-auto sm:px-6 lg:px-8 space-y-6">
+        <dl class="bg-white rounded-lg shadow-sm divide-y divide-gray-100">
+            <div class="px-6 py-4 flex justify-between gap-4"><dt class="text-gray-500">Responsável</dt><dd>{{ $projeto->user->name ?? 'N/A' }}</dd></div>
+            <div class="px-6 py-4 flex justify-between gap-4"><dt class="text-gray-500">Status</dt><dd class="capitalize">{{ $projeto->status }}</dd></div>
+            <div class="px-6 py-4"><dt class="text-gray-500 mb-1">Descrição</dt><dd>{{ $projeto->descricao ?: '—' }}</dd></div>
+            <div class="px-6 py-4 flex justify-between gap-4"><dt class="text-gray-500">Última edição</dt><dd>{{ $projeto->updated_at?->format('d/m/Y H:i') }} por {{ $projeto->updatedBy?->name ?? 'sistema' }}</dd></div>
         </dl>
 
-        <h3 class="mt-4">Tarefas Vinculadas</h3>
-        @if($projeto->tarefas->isEmpty())
-            <p class="text-muted">Não há tarefas vinculadas a este projeto.</p>
-        @else
-            <ul class="list-group">
-                @foreach ($projeto->tarefas as $tarefa)
-                    <li class="list-group-item">
-                        <strong>{{ $tarefa->titulo }}</strong> - {{ $tarefa->descricao ?? 'Sem descrição' }}
-                    </li>
-                @endforeach
-            </ul>
-        @endif
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <h3 class="font-medium text-gray-800 mb-3">Tarefas vinculadas</h3>
+            @if ($projeto->tarefas->isEmpty())
+                <p class="text-sm text-gray-500">Nenhuma tarefa neste projeto.</p>
+            @else
+                <ul class="divide-y divide-gray-100 text-sm">
+                    @foreach ($projeto->tarefas as $tarefa)
+                        <li class="py-2 flex justify-between">
+                            <span>{{ $tarefa->titulo }}</span>
+                            <span class="capitalize text-gray-500">{{ $tarefa->status }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+        </div>
 
-        <a href="{{ route('projeto.index') }}" class="btn btn-secondary mt-3">Voltar</a>
+        <a href="{{ route('projeto.index') }}" class="text-indigo-600 hover:underline text-sm">← Voltar</a>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</x-app-layout>

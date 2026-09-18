@@ -102,7 +102,7 @@
         </tr>
         <tr>
             <th>Responsável</th>
-            <td>{{ $projeto->responsavel->nome ?? 'Não definido' }}</td>
+            <td>{{ $projeto->user->name ?? 'Não definido' }}</td>
         </tr>
     </table>
 
@@ -119,7 +119,7 @@
         <tbody>
             @forelse ($projeto->tarefas as $tarefa)
                 <tr>
-                    <td>{{ $tarefa->nome }}</td>
+                    <td>{{ $tarefa->titulo }}</td>
                     <td>{{ $tarefa->status }}</td>
                     <td>{{ \Carbon\Carbon::parse($tarefa->data_termino)->format('d/m/Y') ?? 'Não definido' }}</td>
                 </tr>

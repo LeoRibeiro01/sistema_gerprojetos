@@ -54,7 +54,11 @@ class UserController extends Controller
     {
         $this->authorize('view', $user);
 
-        return view('users.show', compact('user'));
+        $dailyCheckins = auth()->user()->canViewUsers() || auth()->id() === $user->id
+            ? $user->dailyCheckins()->latest('data')->get()
+            : collect();
+
+        return view('users.show', compact('user', 'dailyCheckins'));
     }
 
     public function edit(User $user)

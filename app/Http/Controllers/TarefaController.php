@@ -69,6 +69,7 @@ class TarefaController extends Controller
                 'tag' => $tarefa->tag,
                 'user_id' => $tarefa->user_id,
                 'sprint_id' => $tarefa->sprint_id,
+                'projeto_id' => $tarefa->projeto_id,
                 'projeto' => $tarefa->projeto?->titulo,
                 'responsavel' => $tarefa->user?->name,
                 'sprint' => $tarefa->sprint?->nome,

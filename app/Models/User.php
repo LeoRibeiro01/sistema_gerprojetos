@@ -97,4 +97,43 @@ class User extends Authenticatable
 
         return in_array($this->role, UserRole::internalTeam(), true);
     }
+
+    public function isManagement(): bool
+    {
+        if ($this->isAdmin()) {
+            return true;
+        }
+
+        return in_array($this->role, [UserRole::Pm->value, UserRole::Manager->value, UserRole::ScrumMaster->value], true);
+    }
+
+    public function canViewUsers(): bool
+    {
+        return $this->isManagement() || $this->isAdmin();
+    }
+
+    public function canViewDailyCheckins(User $viewer): bool
+    {
+        return $viewer->canViewUsers() || $viewer->id === $this->id;
+    }
+
+    public function dailyCheckins(): HasMany
+    {
+        return $this->hasMany(DailyCheckin::class);
+    }
+
+    public function sentMessages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    public function receivedMessages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'recipient_id');
+    }
+
+    public function unreadMessagesCount(): int
+    {
+        return $this->receivedMessages()->whereNull('read_at')->count();
+    }
 }

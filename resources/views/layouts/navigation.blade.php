@@ -13,6 +13,14 @@
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             Dashboard
                         </x-nav-link>
+                        @if (auth()->user()->isInternalTeam())
+                            <a href="{{ route('messages.index') }}" class="relative inline-flex items-center gap-2 text-sm font-medium text-slate-200 hover:text-white {{ request()->routeIs('messages.*') ? 'text-white' : '' }}">
+                                Mensagens
+                                @if (auth()->user()->unreadMessagesCount() > 0)
+                                    <span class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">{{ auth()->user()->unreadMessagesCount() }}</span>
+                                @endif
+                            </a>
+                        @endif
                         @can('viewAny', App\Models\Projeto::class)
                             <x-nav-link :href="route('projeto.index')" :active="request()->routeIs('projeto.*')">
                                 Projetos
@@ -109,6 +117,14 @@
                     <x-responsive-nav-link :href="route('client-portal.index')" :active="request()->routeIs('client-portal.*')">Portal do cliente</x-responsive-nav-link>
                 @endif
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">Dashboard</x-responsive-nav-link>
+                @if (auth()->user()->isInternalTeam())
+                    <x-responsive-nav-link :href="route('messages.index')" :active="request()->routeIs('messages.*')">
+                        Mensagens
+                        @if (auth()->user()->unreadMessagesCount() > 0)
+                            <span class="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">{{ auth()->user()->unreadMessagesCount() }}</span>
+                        @endif
+                    </x-responsive-nav-link>
+                @endif
                 @can('viewAny', App\Models\Projeto::class)
                     <x-responsive-nav-link :href="route('projeto.index')" :active="request()->routeIs('projeto.*')">Projetos</x-responsive-nav-link>
                 @endcan

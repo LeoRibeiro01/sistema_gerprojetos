@@ -12,7 +12,11 @@ class DashboardChartReportController extends Controller
     public function show(Request $request, DashboardChart $chart)
     {
         abort_unless($request->user()->isInternalTeam(), 403);
-        abort_unless($chart->user_id === $request->user()->id, 403);
+        abort_unless(
+            $chart->user_id === $request->user()->id || $request->user()->canViewUsers(),
+            403,
+            'Você não tem permissão para visualizar esse gráfico.'
+        );
 
         $data = app(DashboardController::class)->chartData($chart->metrica);
         $options = new Options();

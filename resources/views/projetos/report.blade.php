@@ -101,7 +101,7 @@
             @else
                 @foreach($tarefas as $tarefa)
                     <tr>
-                        <td>{{ $tarefa->nome }}</td>
+                        <td>{{ $tarefa->titulo }}</td>
                         <td>{{ $tarefa->projeto->titulo }}</td>
                         <td>{{ $tarefa->user->name ?? 'N/A' }}</td>
                         <td>{{ $tarefa->status }}</td>

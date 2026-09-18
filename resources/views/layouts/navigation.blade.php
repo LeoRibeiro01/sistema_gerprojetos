@@ -8,8 +8,10 @@
 
     <aside class="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col bg-gradient-to-b from-blue-950 via-blue-900 to-slate-950 text-white lg:flex">
         <div class="flex h-20 items-center gap-3 border-b border-white/10 px-6">
-            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-400 font-bold text-blue-950">A</div>
-            <a href="{{ route('dashboard') }}" class="text-lg font-bold tracking-wide">ATLAS</a>
+            <a href="{{ route('dashboard') }}" class="flex items-center gap-3" aria-label="ATLAS — Dashboard">
+                <img src="{{ asset('images/atlas-logo-white.png') }}" alt="ATLAS" class="h-11 w-11 object-contain">
+                <span class="text-lg font-bold tracking-wide">ATLAS</span>
+            </a>
         </div>
 
         <nav class="min-h-0 flex-1 space-y-1 overflow-y-auto px-3 py-5" aria-label="Navegação principal">
@@ -63,7 +65,9 @@
 
     <nav x-data="{ open: false }" class="sticky top-0 z-40 border-b border-slate-200 bg-white lg:hidden">
         <div class="flex h-16 items-center justify-between px-4">
-            <a href="{{ route('dashboard') }}" class="font-bold tracking-wide text-blue-950">ATLAS</a>
+            <a href="{{ route('dashboard') }}" aria-label="ATLAS — Dashboard">
+                <img src="{{ asset('images/atlas-brand.png') }}" alt="ATLAS Project Management System" class="h-10 w-auto object-contain">
+            </a>
             <button type="button" @click="open = !open" class="rounded-lg p-2 text-slate-600 hover:bg-slate-100" aria-label="Abrir menu">
                 <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path :d="open ? 'm6 6 12 12M6 18 18 6' : 'M4 6h16M4 12h16M4 18h16'"/></svg>
             </button>

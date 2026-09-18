@@ -17,10 +17,7 @@
             <div class="mx-auto max-w-7xl">
                 <section class="grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
                     <div class="text-center lg:text-left">
-                        <div class="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-white/80 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-sky-700 shadow-[0_10px_30px_rgba(14,116,144,0.12)] backdrop-blur-sm">
-                            <span class="inline-block h-2 w-2 rounded-full bg-sky-500"></span>
-                            ATLAS
-                        </div>
+                        <img src="{{ asset('images/atlas-brand-transparent.png') }}" alt="ATLAS Project Management System" class="mx-auto h-auto w-64 object-contain lg:mx-0">
 
                         <h1 class="mt-6 text-4xl font-black tracking-[-0.06em] text-slate-900 sm:text-5xl lg:text-7xl">
                             A solução de gerenciamento que a sua equipe precisa.
@@ -101,8 +98,11 @@
     </div>
 
     <footer class="mt-auto border-t border-slate-200 bg-slate-900 text-slate-200">
-        <div class="mx-auto flex max-w-7xl flex-col items-center justify-center gap-2 px-6 py-4 text-center text-sm sm:flex-row sm:gap-6">
-            <span class="font-semibold text-white">ATLAS</span>
+        <div class="mx-auto flex max-w-7xl flex-col items-center justify-center gap-3 px-6 py-4 text-center text-sm sm:flex-row sm:gap-6">
+            <div class="flex items-center gap-2">
+                <img src="{{ asset('images/atlas-logo-white.png') }}" alt="ATLAS" class="h-8 w-8 object-contain">
+                <span class="font-semibold text-white">ATLAS</span>
+            </div>
             <span>Contato: (41) 98477-0170</span>
             <span>leonardo.ribeiro250307@gmail.com</span>
         </div>
